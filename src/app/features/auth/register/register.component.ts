@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ export class RegisterComponent {
   errorMsg: string = '';
   msgSuccess: boolean = false;
   isLoading: boolean = false;
+  registerSub!: Subscription;
 
 
   registerForm: FormGroup = new FormGroup({
@@ -31,7 +33,7 @@ export class RegisterComponent {
   register(): void {
     if(this.registerForm.valid) {
       this.isLoading = true;
-      this._AuthService.setRegisterForm(this.registerForm.value).subscribe({
+      this.registerSub = this._AuthService.setRegisterForm(this.registerForm.value).subscribe({
         next: (res) => {
           console.log(res);
           if(res.message === 'success') {
@@ -61,6 +63,10 @@ export class RegisterComponent {
     } else {
       return {mismatch:true}
     }
+  }
+
+  ngOnDestroy(): void {
+    this.registerSub?.unsubscribe();
   }
 
 }
