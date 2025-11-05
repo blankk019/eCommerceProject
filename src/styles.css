@@ -44,6 +44,15 @@ a:hover {
   overflow: hidden;
 }
 
+.product .btn-main {
+  transform: translateY(200%);
+  transition: transform 0.5s;
+}
+
+.product:hover .btn-main {
+  transform: translateY(0);
+}
+
 .product:hover {
   box-shadow: 0 0 10px #11bd1168;
 }
@@ -77,5 +86,6 @@ a:hover {
   background-color: #ccc;
 }
 .btn-main:hover {
-  background-color: #11bd11;
+  background-color: #fff;
+  border: 1px solid black;
 }
