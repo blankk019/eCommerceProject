@@ -1,0 +1,10 @@
+.brands-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem; /* spacing between cards */
+  padding: 3rem 5rem;
+  justify-items: center;
+  align-items: stretch;
+  background-color: #f9fafc;
+  box-sizing: border-box;
+}

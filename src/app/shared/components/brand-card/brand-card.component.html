@@ -1,0 +1,7 @@
+<div class="card" style="width: 18rem">
+  <img class="card-img-top" [src]="brand.image" [alt]="brand.name" />
+  <div class="card-body">
+    <h5 class="card-title">{{ brand.name }}</h5>
+    <a [routerLink]="['/brands', brand._id, 'products']">View All Products</a>
+  </div>
+</div>
