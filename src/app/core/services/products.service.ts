@@ -13,7 +13,7 @@ getAllProducts(): Observable<any> {
 return this._HttpClient.get('https://ecommerce.routemisr.com/api/v1/products');
 }
 
-getSpecificProduct(id: string): Observable<any> {
+getSpecificProduct(id: string | null): Observable<any> {
 return this._HttpClient.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
 }
 

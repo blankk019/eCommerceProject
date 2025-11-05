@@ -58,7 +58,8 @@
         {
             <div class="col-md-2">
   <div class="product card border-0 shadow-sm h-100 text-center p-2">
-    <img [src]="product.imageCover" class="card-img-top img-fluid mx-auto w-100" [alt]="product.title">
+   <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
+     <img [src]="product.imageCover" class="card-img-top img-fluid mx-auto w-100" [alt]="product.title">
 
     <div class="card-body">
       <p class="mb-1 small">{{product.category.name}}</p>
@@ -78,6 +79,7 @@
 
       
     </div>
+   </div>
 
     <button class="btn btn-main w-100">
         Add to Cart
