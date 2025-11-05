@@ -1,1 +1,74 @@
-<p>login works!</p>
+<section>
+    <h2 class="text-main mb-5 ">Login Now :</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+   <div class="mb-3">
+    <label for="email" class="form-label fw-semibold">Email</label>
+    <input  [ngClass]="{
+        'is-valid': !loginForm.get('email')?.errors && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty),
+        'is-invalid': loginForm.get('email')?.errors && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)
+    }" type="email" class="form-control" id="email" formControlName="email">
+
+     @if(loginForm.get('email')?.errors && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty))
+        {
+       <div class="alert alert-danger mt-1">
+         @if(loginForm.get('email')?.getError('required'))
+            { 
+                <p class="m-0">Email is Required</p>
+            }
+        @else if(loginForm.get('email')?.getError('email'))
+            { 
+                <p class="m-0">Enter Valid Email</p>
+            }
+          
+       </div>
+        } 
+  </div>
+   <div class="mb-3">
+    <label for="password" class="form-label fw-semibold">Password</label>
+    <input  [ngClass]="{
+        'is-valid': !loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty),
+        'is-invalid': loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)
+    }" type="password" class="form-control" id="password" formControlName="password">
+
+     @if(loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty))
+        {
+       <div class="alert alert-danger mt-1">
+         @if(loginForm.get('password')?.getError('required'))
+            { 
+                <p class="m-0">password is Required</p>
+            }
+        @else if(loginForm.get('password')?.getError('pattern'))
+            { 
+                <p class="m-0">Enter Valid Password</p>
+            }
+          
+       </div>
+        } 
+  </div>
+ 
+   
+ 
+  <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn text-white d-block ms-auto bg-main">
+    
+    login
+@if (isLoading)
+    {
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    }
+</button>
+
+  @if (errorMsg)
+    {
+      <div class="alert alert-danger mt-3">
+        <p class="m-0">{{ errorMsg }}</p>
+      </div>
+    }
+</form>
+
+@if (msgSuccess) {
+  <div class="alert alert-success mt-3" role="alert">
+   ✅ Logged in successfully
+  </div>
+}
+</section>
