@@ -1,0 +1,8 @@
+<div class="product-card">
+  <img [src]="product.imageCover" [alt]="product.title" />
+  <div class="product-card-body">
+    <h5 class="product-title">{{ product.title }}</h5>
+    <p class="product-desc">{{ product.description }}</p>
+    <button class="product-btn">Buy for ${{ product.price }}</button>
+  </div>
+</div>

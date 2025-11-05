@@ -9,27 +9,36 @@ import { ProductsComponent } from './features/products/products.component';
 import { BrandsComponent } from './features/brands/brands.component';
 import { CategoriesComponent } from './features/categories/categories.component';
 import { CartComponent } from './features/cart/cart.component';
+import { BrandProductComponent } from './features/brands/brand-product/brand-product.component';
 import { authGuard } from './core/guards/auth.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 import { ProductDetailsComponent } from './features/product-details/product-details.component';
 
 export const routes: Routes = [
-    {path: '', component: AuthLayoutComponent, canActivate:[loggedGuard], children: [
-        {path: '', redirectTo: 'login', pathMatch: 'full'},
-        {path: 'login', component: LoginComponent},
-        {path: 'register', component: RegisterComponent}
-    ]},
-    {path: '', component: MainLayoutComponent, canActivate:[authGuard], children: [
-        {path: '', redirectTo: 'home', pathMatch: 'full'},
-        {path: 'home', component: HomeComponent},
-        {path: 'products', component: ProductsComponent},
-        {path: 'brands', component: BrandsComponent},
-        {path: 'categories', component: CategoriesComponent},
-        {path: 'cart', component: CartComponent},
-        {path: 'product-details/:id', component:ProductDetailsComponent}
-        
-    ]},
-    {path: '**', component: NotFoundComponent}
-
-
+  {
+    path: '',
+    component: AuthLayoutComponent,
+    canActivate: [loggedGuard],
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+    ],
+  },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'products', component: ProductsComponent },
+      { path: 'brands', component: BrandsComponent },
+      { path: 'categories', component: CategoriesComponent },
+      { path: 'cart', component: CartComponent },
+      { path: 'product-details/:id', component: ProductDetailsComponent },
+      { path: 'brands/:brandId/products', component: BrandProductComponent },
+    ],
+  },
+  { path: '**', component: NotFoundComponent },
 ];
