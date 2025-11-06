@@ -39,4 +39,19 @@ export class AuthService {
 
   }
 
+  setVerifyEmail(data: object) : Observable<any>
+  {
+    return this._HttpClient.post('https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords', data);
+  }
+
+  setVerifyCode(data: object) : Observable<any>
+  {
+    return this._HttpClient.post('https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode', data);
+  }
+
+  setResetPassword(data: object) : Observable<any>
+  {
+    return this._HttpClient.put('https://ecommerce.routemisr.com/api/v1/auth/resetPassword', data);
+  }
+
 }
