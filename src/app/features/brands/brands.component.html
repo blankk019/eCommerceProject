@@ -1,1 +1,5 @@
-<p>brands works!</p>
+<div class="brands-container">
+  @for (brand of brands; track brand._id) {
+  <app-brand-card [brand]="brand"></app-brand-card>
+  }
+</div>

@@ -1,0 +1,77 @@
+.product-card {
+  width: 240px;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 380px;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image section — now fills area fully */
+.product-card img {
+  width: 100%;
+  height: 190px; /* slightly larger area */
+  object-fit: cover; /* 🔹 fills area neatly */
+  background-color: #f2f2f2;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+/* Subtle zoom on hover */
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Body */
+.product-card-body {
+  flex: 1;
+  padding: 0.75rem 1rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
+  height: 2.5em;
+  overflow: hidden;
+}
+
+.product-desc {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+  height: 2.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+.product-btn {
+  background-color: black;
+  border: none;
+  color: white;
+  font-weight: 500;
+  padding: 0.6rem 0;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: auto;
+}
+
+.product-btn:hover {
+  background-color: white;
+}
