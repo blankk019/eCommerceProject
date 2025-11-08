@@ -1,0 +1,144 @@
+.cart-items {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+  gap: 1rem;
+}
+
+.cart-item-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0; /* Important for text truncation */
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  flex-shrink: 0;
+}
+
+.product-details {
+  min-width: 0; /* Important for text truncation */
+  flex: 1;
+}
+
+.product-title {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  min-width: 220px; /* Fixed width for consistency */
+  justify-content: flex-end;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.quantity-controls button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-controls span {
+  min-width: 30px;
+  text-align: center;
+}
+
+.cart-item-actions h6 {
+  margin: 0;
+  min-width: 60px; /* Fixed width for price */
+  text-align: right;
+}
+
+.cart-item-actions .btn-link {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scrollbar styling */
+.cart-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-items::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .cart-item-info {
+    width: 100%;
+  }
+
+  .cart-item-actions {
+    width: 100%;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .product-details {
+    max-width: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .cart-item-actions {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: flex-start;
+  }
+
+  .quantity-controls {
+    order: 1;
+    flex: 1;
+  }
+
+  .cart-item-actions h6 {
+    order: 2;
+    text-align: left;
+  }
+
+  .cart-item-actions .btn-link {
+    order: 3;
+  }
+}
