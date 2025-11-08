@@ -6,12 +6,13 @@ import { CategoriesService } from '../../core/services/categories.service';
 import { ICategory } from '../../core/interfaces/icategory';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { RouterLink } from '@angular/router';
+import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, RouterLink],
+  imports: [CarouselModule, RouterLink, ProductCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

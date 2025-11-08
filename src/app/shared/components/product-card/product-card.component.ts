@@ -1,9 +1,10 @@
 import { Component, Input, inject } from '@angular/core';
-import { Product } from '../../models/product.model';
+//import { Product } from '../../models/product.model';
 import { CurrencyPipe } from '@angular/common';
 import { CartService } from '../../../core/services/cart.service';
 import { RouterLink } from '@angular/router';
 
+import { IProduct } from '../../../core/interfaces/iproduct';
 @Component({
   selector: 'app-product-card',
   standalone: true,
@@ -12,7 +13,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  @Input({ required: true }) product!: Product;
+  @Input({ required: true }) product!: IProduct;
+  //@Input({ required: true }) product!: Product;
   _cartService = inject(CartService);
 
   addToCart(productId: string): void {

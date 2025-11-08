@@ -13,8 +13,12 @@ import { BrandProductComponent } from './features/brands/brand-product/brand-pro
 import { authGuard } from './core/guards/auth.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 import { ProductDetailsComponent } from './features/product-details/product-details.component';
+import { ForgotPasswordComponent } from './features/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
+    
+
+
   {
     path: '',
     component: AuthLayoutComponent,
@@ -23,6 +27,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      {path: 'forgot-password', component: ForgotPasswordComponent}
+
     ],
   },
   {
