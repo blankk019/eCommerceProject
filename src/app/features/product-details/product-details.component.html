@@ -1,7 +1,15 @@
 @if(detailsProduct)
 {
     <section>
-    <h1 class="bg-black text-white w-100 text-center mb-3">Product Details</h1>
+    <div class="text-center my-5">
+  <h2 class="fw-bold display-5 position-relative d-inline-block pb-3 mb-4">
+    Product Details
+    <span 
+      class="position-absolute start-50 translate-middle-x" 
+      style="bottom: 0; width: 100px; height: 3px; background-color: #000;">
+    </span>
+  </h2>
+</div>
     <div class="row align-items-center">
         <div class="col-md-3">
              <owl-carousel-o [options]="customOptionsDetails">

@@ -16,23 +16,7 @@ import { ProductDetailsComponent } from './features/product-details/product-deta
 import { ForgotPasswordComponent } from './features/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
-    {path: '', component: AuthLayoutComponent, canActivate:[loggedGuard], children: [
-        {path: '', redirectTo: 'login', pathMatch: 'full'},
-        {path: 'login', component: LoginComponent},
-        {path: 'register', component: RegisterComponent},
-        {path: 'forgot-password', component: ForgotPasswordComponent}
-    ]},
-    {path: '', component: MainLayoutComponent, canActivate:[authGuard], children: [
-        {path: '', redirectTo: 'home', pathMatch: 'full'},
-        {path: 'home', component: HomeComponent},
-        {path: 'products', component: ProductsComponent},
-        {path: 'brands', component: BrandsComponent},
-        {path: 'categories', component: CategoriesComponent},
-        {path: 'cart', component: CartComponent},
-        {path: 'product-details/:id', component:ProductDetailsComponent}
-        
-    ]},
-    {path: '**', component: NotFoundComponent}
+    
 
 
   {
@@ -43,6 +27,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      {path: 'forgot-password', component: ForgotPasswordComponent}
+
     ],
   },
   {

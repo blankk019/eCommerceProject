@@ -1,5 +1,10 @@
-<div class="products-grid">
+<section class="py-5">
+  <div class="row g-4">
   @for (product of brandProducts; track product._id) {
-  <app-product-card [product]="product"></app-product-card>
+  <div class="col-md-3 col-sm-6">
+    <app-product-card [product]="product"></app-product-card>
+  </div>
   }
 </div>
+
+</section>

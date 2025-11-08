@@ -1,7 +1,8 @@
 <!-- main slider -->
 
-<section>
-  <div class="row g-0">
+<section class="py-5">
+<div class="container">
+    <div class="row g-0">
     <div class="col-md-9">
       <div>
 
@@ -29,12 +30,16 @@
       </div>
     </div>
   </div>
+</div>
 </section>
 
 
 <!-- categories -->
  <section class="my-2">
-  <h2 class="bg-black text-white w-100 text-center">Popular Categories</h2>
+<div class="container">
+    <h2 class="section-title position-relative d-inline-block pb-1">
+  Popular Categories
+</h2>
    <owl-carousel-o [options]="customOptionsCat">
 
     @for (cat of categoriesList; track cat._id) {
@@ -47,24 +52,38 @@
     }
 
   </owl-carousel-o>
+</div>
  </section>
 
 <!-- products -->
-<section>
-    <h2 class="bg-black text-white w-100 text-center">Popular Products</h2>
-    <div class="row g-3">
+<section class="py-5">
+ <div class="container">
+       <h2 class="section-title position-relative d-inline-block pb-1">
+  Featured Products
+</h2>
+
+<div class="row g-4">
+  @for (product of productsList.slice(0, 18); track product.id) {
+    <div class="col-md-3 col-sm-6">
+     <app-product-card [product]="product"></app-product-card>
+    </div>
+  }
+</div>
+ </div>
+
+    <!-- <div class="row g-3">
 
         @for (product of productsList.slice(0,18); track product.id)
         {
             <div class="col-md-2">
   <div class="product card border-0 shadow-sm h-100 text-center p-2">
    <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
-     <img [src]="product.imageCover" class="card-img-top img-fluid mx-auto w-100" [alt]="product.title">
+     <img [src]="product.imageCover" class="w-100" [alt]="product.title">
 
-    <div class="card-body">
+    <div class="product-card-body">
       <p class="mb-1 small">{{product.category.name}}</p>
 
-      <h6 class="card-title mb-2 fw-semibold">
+      <h6 class="product-title ">
         {{product.title.split(" ", 2).join(" ")}}
       </h6>
 
@@ -89,5 +108,5 @@
 
         }
 
-    </div>
+    </div> -->
 </section>

@@ -1,3 +1,30 @@
-.card-body p {
-    color: #b4aeae;
+.section-title {
+  font-weight: 600;
+  font-size: 1.25rem; 
+  margin-bottom: 10px;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  height: 2px;
+  background-color: #000;
+}
+
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.fa-heart:hover {
+  color: #dc3545;
+  transition: 0.3s;
 }
