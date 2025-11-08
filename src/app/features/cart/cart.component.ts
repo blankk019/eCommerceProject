@@ -34,12 +34,14 @@ export class CartComponent implements OnInit {
   decCount(productId: string, count: number): void {
     //decrease count
     if (count > 1) count--;
-    count--;
     //calls upon the service
     this._cartService.updateCartQuantity(count, productId).subscribe({
       next: (response) => {
         console.log('Cart quantity updated:', response.status);
         this.cartItems = response.data.products;
+        this.subtotal = response.data.totalCartPrice;
+        this.estimatedTax = this.subtotal * 0.1;
+        this.total = this.subtotal + this.estimatedTax + this.shippingHandling;
       },
       error: (error) => {
         console.error('Error updating cart quantity:', error);
@@ -54,6 +56,9 @@ export class CartComponent implements OnInit {
       next: (response) => {
         console.log('Cart quantity updated:', response.status);
         this.cartItems = response.data.products;
+        this.subtotal = response.data.totalCartPrice;
+        this.estimatedTax = this.subtotal * 0.1;
+        this.total = this.subtotal + this.estimatedTax + this.shippingHandling;
       },
       error: (error) => {
         console.error('Error updating cart quantity:', error);

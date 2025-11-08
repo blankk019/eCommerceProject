@@ -8,7 +8,7 @@ import { IProduct } from '../../../core/interfaces/iproduct';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CurrencyPipe, RouterLink],
+  imports: [RouterLink, CurrencyPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })
