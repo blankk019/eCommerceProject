@@ -3,6 +3,10 @@
   <div class="product-card-body">
     <h5 class="product-title">{{ product.title }}</h5>
     <p class="product-desc">{{ product.description }}</p>
-    <button class="product-btn">Buy for ${{ product.price }}</button>
+  </div>
+  <div class="product-card-footer">
+    <button (click)="addToCart(product.id)" class="product-btn">
+      Add to Cart for ${{ product.price }}
+    </button>
   </div>
 </div>

@@ -4,27 +4,28 @@ import { IProduct } from '../../core/interfaces/iproduct';
 import { Subscription } from 'rxjs';
 import { CategoriesService } from '../../core/services/categories.service';
 import { ICategory } from '../../core/interfaces/icategory';
-import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
-import { RouterLink } from "@angular/router";
-
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { RouterLink } from '@angular/router';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CarouselModule, RouterLink],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   private readonly _ProductsService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
+  private readonly _CartService = inject(CartService);
 
-  productsList:IProduct[] = [];
-  categoriesList:ICategory[] = [];
+  productsList: IProduct[] = [];
+  categoriesList: ICategory[] = [];
 
-  getAllProductsSub!:Subscription;
+  getAllProductsSub!: Subscription;
 
-    customOptionsCat: OwlOptions = {
+  customOptionsCat: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -37,22 +38,22 @@ export class HomeComponent implements OnInit {
     navText: ['', ''],
     responsive: {
       0: {
-        items: 1
+        items: 1,
       },
       400: {
-        items: 2
+        items: 2,
       },
       740: {
-        items: 3
+        items: 3,
       },
       940: {
-        items: 6
-      }
+        items: 6,
+      },
     },
-    nav: false
-  }
+    nav: false,
+  };
 
-   customOptionsMain: OwlOptions = {
+  customOptionsMain: OwlOptions = {
     loop: true,
     mouseDrag: false,
     touchDrag: false,
@@ -64,40 +65,35 @@ export class HomeComponent implements OnInit {
     navSpeed: 700,
     navText: ['', ''],
     items: 1,
-    nav: true
-  }
+    nav: true,
+  };
 
   ngOnInit(): void {
-
     this._CategoriesService.getAllCategories().subscribe({
-      next : (res) => {
+      next: (res) => {
         console.log(res.data);
         this.categoriesList = res.data;
       },
 
-      error : (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
 
     this.getAllProductsSub = this._ProductsService.getAllProducts().subscribe({
-      next : (res) => {
+      next: (res) => {
         console.log(res.data);
 
         this.productsList = res.data;
       },
 
-      error : (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    })
-    
+      },
+    });
   }
 
   ngOnDestroy(): void {
-
     this.getAllProductsSub?.unsubscribe();
   }
-
-  
 }

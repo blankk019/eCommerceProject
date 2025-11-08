@@ -10,11 +10,11 @@
   --rating-color: #ffc908;
 }
 
-html, body {
+html,
+body {
   font-family: var(--font-family) !important;
   margin: 0;
   padding: 0;
-
 }
 
 .nav-link {

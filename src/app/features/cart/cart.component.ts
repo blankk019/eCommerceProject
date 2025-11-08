@@ -1,12 +1,93 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { inject } from '@angular/core';
+import { CartService } from '../../core/services/cart.service';
+import { ProductElement } from '../../shared/models/cart.model';
+import { FormsModule } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CurrencyPipe],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrl: './cart.component.css',
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
+  cartItems: ProductElement[] = [];
+  subtotal: number = 0;
+  estimatedTax: number = 0;
+  shippingHandling: number = 0;
+  total: number = 0;
+  discountCode: string = '';
+  discountApplied: boolean = false;
 
+  _cartService = inject(CartService);
+
+  applyDiscount(): void {
+    if (this.discountCode === 'ANG25OFF') {
+      this.discountApplied = true;
+      this.total *= 0.75;
+    }
+  }
+
+  //Count controll methods
+  decCount(productId: string, count: number): void {
+    //decrease count
+    if (count > 1) count--;
+    count--;
+    //calls upon the service
+    this._cartService.updateCartQuantity(count, productId).subscribe({
+      next: (response) => {
+        console.log('Cart quantity updated:', response.status);
+        this.cartItems = response.data.products;
+      },
+      error: (error) => {
+        console.error('Error updating cart quantity:', error);
+      },
+    });
+  }
+  incCount(productId: string, count: number): void {
+    //increase count
+    count++;
+    //calls upon the service
+    this._cartService.updateCartQuantity(count, productId).subscribe({
+      next: (response) => {
+        console.log('Cart quantity updated:', response.status);
+        this.cartItems = response.data.products;
+      },
+      error: (error) => {
+        console.error('Error updating cart quantity:', error);
+      },
+    });
+  }
+
+  deleteFromCart(productId: string): void {
+    this._cartService.deleteFromCart(productId).subscribe({
+      next: (response) => {
+        console.log('Item removed from cart:', response.status);
+        this.cartItems = this.cartItems.filter(
+          (item) => item._id !== productId
+        );
+      },
+      error: (error) => {
+        console.error('Error removing item from cart:', error);
+      },
+    });
+  }
+
+  ngOnInit(): void {
+    // Fetch cart items from service and calculate totals
+    this._cartService.getCart().subscribe({
+      next: (response) => {
+        this.cartItems = response.data.products;
+        this.subtotal = response.data.totalCartPrice;
+        this.estimatedTax = this.subtotal * 0.1;
+        this.shippingHandling = 5;
+        this.total = this.subtotal + this.estimatedTax + this.shippingHandling;
+      },
+      error: (error) => {
+        console.error('Error fetching cart items:', error);
+      },
+    });
+  }
 }

@@ -71,7 +71,6 @@
   width: 100%;
   margin-top: auto;
 }
-
 .product-btn:hover {
-  background-color: white;
+  background-color: #333;
 }
