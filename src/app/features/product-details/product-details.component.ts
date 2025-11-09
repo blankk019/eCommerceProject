@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
 import { IProduct } from '../../core/interfaces/iproduct';
 import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
@@ -7,7 +7,7 @@ import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CarouselModule, RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
