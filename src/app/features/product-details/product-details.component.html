@@ -1,4 +1,4 @@
-@if(detailsProduct)
+<!-- @if(detailsProduct)
 {
     <section>
     <div class="text-center my-5">
@@ -52,5 +52,84 @@
 
         </div>
     </div>
+</section>
+} -->
+
+@if(detailsProduct)
+{
+<section class="container my-5">
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
+      <li class="breadcrumb-item"><a routerLink="/products">{{detailsProduct.category.name}}</a></li>
+      <li class="breadcrumb-item active">{{detailsProduct.title}}</li>
+    </ol>
+  </nav>
+
+  <div class="row gy-5 align-items-center">
+    <!-- Left side - Images -->
+    <div class="col-md-5">
+      <owl-carousel-o [options]="customOptionsDetails">
+        @for(image of detailsProduct.images; track $index)
+        {
+          <ng-template carouselSlide>
+            <div class="p-2">
+              <img
+                class="w-100 rounded-3 shadow-sm"
+                [src]="image"
+                [alt]="detailsProduct.title"
+                style="object-fit: cover;"
+              />
+            </div>
+          </ng-template>
+        }
+      </owl-carousel-o>
+    </div>
+
+    <!-- Right side - Product Info -->
+    <div class="col-md-7">
+      <h2 class="fw-bold mb-3">{{detailsProduct.title}}</h2>
+
+      <div class="d-flex align-items-center mb-3">
+        <h4 class="fw-semibold text-success me-3 mb-0">
+          {{detailsProduct.price}} EGP
+        </h4>
+        <span class="text-muted text-decoration-line-through small">
+          {{detailsProduct.price + 1000}} EGP
+        </span>
+      </div>
+
+
+      <div class="mb-4">
+     
+        <button class="btn btn-outline-dark btn-sm">{{detailsProduct.brand.name}}</button>
+      </div>
+
+      <div class="border-top pt-3 mt-3 small text-muted">
+        <p class="mb-1">
+          <strong>Category:</strong> {{detailsProduct.category.name}}
+        </p>
+        <p class="mb-1">
+          <strong>Rating:</strong>
+          <i class="fas fa-star text-warning"></i>
+          {{detailsProduct.ratingsAverage}}
+        </p>
+        <p>{{detailsProduct.description}}</p>
+      </div>
+
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <button class="btn btn-outline-dark px-4 py-2">Add to Wishlist</button>
+        <button class="btn btn-dark px-4 py-2 text-white">
+          Add to Cart
+        </button>
+      </div>
+
+      <div class="mt-4 d-flex flex-wrap gap-4 text-muted small">
+        <div><i class="fas fa-truck"></i> Free Delivery (1–2 days)</div>
+        <div><i class="fas fa-check-circle"></i> In Stock Today</div>
+        <div><i class="fas fa-shield-alt"></i> Guaranteed 1 Year</div>
+      </div>
+    </div>
+  </div>
 </section>
 }
