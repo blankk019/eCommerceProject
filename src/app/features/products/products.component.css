@@ -1,3 +1,207 @@
+/* Search Bar */
+.search-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 18px;
+  z-index: 1;
+}
+
+.search-input {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  font-size: 15px;
+  height: 50px;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #000;
+  box-shadow: none;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-search-btn:hover {
+  color: #000;
+}
+
+/* Filters Sidebar */
+.filters-sidebar {
+  background: #f8f8f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: sticky;
+  top: 20px;
+}
+
+.filter-group {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+
+.filter-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filter-group h6 {
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+}
+
+.filter-options {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.filter-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-options::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.filter-options::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.filter-options::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.form-check-input {
+  cursor: pointer;
+  border: 2px solid #ccc;
+  width: 18px;
+  height: 18px;
+}
+
+.form-check-input:checked {
+  background-color: #000;
+  border-color: #000;
+}
+
+.form-check-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Price Range */
+.price-inputs input {
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.price-display {
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Active Filters */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f8f8f8;
+  border-radius: 6px;
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background: #000;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.filter-tag i {
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.filter-tag i:hover {
+  opacity: 1;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.empty-state i {
+  font-size: 80px;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state h4 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state .btn-dark {
+  background-color: #000;
+  border-color: #000;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+}
+
+.empty-state .btn-dark:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
 .product-card {
   width: 240px;
   border: none;

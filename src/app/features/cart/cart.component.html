@@ -109,10 +109,10 @@
               <span>Estimated Tax</span>
               <span>{{ estimatedTax | currency }}</span>
             </li>
-            <li class="d-flex justify-content-between mb-2">
+            <!-- <li class="d-flex justify-content-between mb-2">
               <span>Estimated Shipping & Handling</span>
               <span>{{ shippingHandling | currency }}</span>
-            </li>
+            </li> -->
             <hr />
             <li class="d-flex justify-content-between fw-semibold">
               <span>Total</span>
@@ -121,7 +121,10 @@
           </ul>
         </div>
 
-        <button class="btn btn-dark w-100 py-2 rounded-3 fw-semibold">
+        <button
+          [routerLink]="['/checkout', cartId]"
+          class="btn btn-dark w-100 py-2 rounded-3 fw-semibold"
+        >
           Checkout
         </button>
       </div>

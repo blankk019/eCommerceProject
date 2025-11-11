@@ -1,1 +1,55 @@
-<p>checkout works!</p>
+<div class="checkout-stepper mb-4">
+  <div
+    class="stepper-container d-flex justify-content-between align-items-center"
+  >
+    <!-- Step 1: Address -->
+    <div
+      class="step-item d-flex align-items-center"
+      [class.active]="isActiveRoute('address')"
+    >
+      <div class="step-circle">
+        <span class="step-number">1</span>
+      </div>
+      <div class="step-content ms-2">
+        <div class="step-label">Step 1</div>
+        <div class="step-title">Address</div>
+      </div>
+    </div>
+
+    <!-- Connector Line -->
+    <div class="step-connector"></div>
+
+    <!-- Step 2: Shipping -->
+    <div
+      class="step-item d-flex align-items-center"
+      [class.active]="isActiveRoute('shipping')"
+    >
+      <div class="step-circle">
+        <span class="step-number">2</span>
+      </div>
+      <div class="step-content ms-2">
+        <div class="step-label">Step 2</div>
+        <div class="step-title">Shipping</div>
+      </div>
+    </div>
+
+    <!-- Connector Line -->
+    <div class="step-connector"></div>
+
+    <!-- Step 3: Payment -->
+    <div
+      class="step-item d-flex align-items-center"
+      [class.active]="isActiveRoute('payment')"
+    >
+      <div class="step-circle">
+        <span class="step-number">3</span>
+      </div>
+      <div class="step-content ms-2">
+        <div class="step-label">Step 3</div>
+        <div class="step-title">Payment</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

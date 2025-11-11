@@ -1,0 +1,91 @@
+<div class="shipping-container">
+  <div class="shipping-content">
+    <h2 class="section-title mb-4">Shipment Method</h2>
+
+    <!-- Shipping Methods List -->
+    <div class="shipping-methods-list">
+      <div
+        *ngFor="let method of shippingMethods"
+        class="shipping-card mb-3"
+        [class.selected]="selectedShippingId === method.id"
+        (click)="selectShippingMethod(method.id)"
+      >
+        <div class="d-flex align-items-start">
+          <!-- Radio Button -->
+          <div class="shipping-radio">
+            <input
+              type="radio"
+              [id]="'shipping-' + method.id"
+              [checked]="selectedShippingId === method.id"
+              [value]="method.id"
+              name="selectedShipping"
+              class="form-check-input"
+            />
+          </div>
+
+          <!-- Shipping Method Content -->
+          <div class="shipping-details flex-grow-1">
+            <div class="d-flex align-items-center mb-1">
+              <span class="shipping-price" [class.free-price]="method.isFree">
+                {{ method.isFree ? method.name : method.name }}
+              </span>
+              <span class="shipping-description ms-2">{{
+                method.description
+              }}</span>
+            </div>
+
+            <!-- Date Picker for Schedule Option -->
+            <div
+              *ngIf="
+                method.requiresDateSelection && selectedShippingId === method.id
+              "
+              class="mt-3"
+            >
+              <select
+                class="form-select date-select"
+                [(ngModel)]="selectedDeliveryDate"
+                (change)="onDateSelected(selectedDeliveryDate!)"
+              >
+                <option [ngValue]="null" disabled>Select Date</option>
+                <option value="2023-10-01">1 Oct, 2023</option>
+                <option value="2023-10-02">2 Oct, 2023</option>
+                <option value="2023-10-03">3 Oct, 2023</option>
+                <option value="2023-10-05">5 Oct, 2023</option>
+                <option value="2023-10-08">8 Oct, 2023</option>
+                <option value="2023-10-10">10 Oct, 2023</option>
+                <option value="2023-10-15">15 Oct, 2023</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Delivery Date (for non-schedule methods) -->
+          <div *ngIf="!method.requiresDateSelection" class="shipping-date">
+            {{ method.deliveryDate }}
+          </div>
+
+          <!-- Dropdown Arrow for Schedule -->
+          <div
+            *ngIf="
+              method.requiresDateSelection && selectedShippingId === method.id
+            "
+            class="shipping-arrow"
+          >
+            <i class="bi bi-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons mt-5">
+      <button class="btn btn-back" (click)="goBack()">Back</button>
+      <button
+        class="btn btn-next"
+        (click)="proceedToPayment()"
+        [disabled]="!selectedShippingId"
+      >
+        Check out
+      </button>
+    </div>
+  </div>
+</div>
