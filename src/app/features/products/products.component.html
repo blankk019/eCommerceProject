@@ -1,108 +1,224 @@
-<!-- <div class="container py-5">
-<div class="text-center my-5">
-  <h2 class="fw-bold display-5 position-relative d-inline-block pb-3 mb-4">
-    Products
-    <span 
-      class="position-absolute start-50 translate-middle-x" 
-      style="bottom: 0; width: 100px; height: 3px; background-color: #000;">
-    </span>
-  </h2>
-</div>
-
-  <div class="row g-4">
-    @for (product of products; track product.id) {
-      <div class="col-md-3 col-sm-6">
-       <app-product-card [product]="product"></app-product-card>
-      </div>
-     
-    }
-  </div>
-
-  <pagination
-    [totalItems]="totalItems"
-    [(ngModel)]="currentPage"
-    [itemsPerPage]="itemsPerPage"
-    (pageChanged)="pageChanged($event)"
-    previousText="‹ Prev"
-    nextText="Next ›"
-    class="justify-content-center mt-4">
-  </pagination>
-</div> -->
-
-
 <div class="container py-5">
-
   <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
-      <li class="breadcrumb-item active"><a routerLink="/brands">Brands</a></li>
+      <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Products</li>
     </ol>
   </nav>
 
-  <div class="container">
-    <div class="row">
-    <div class="col-lg-3 col-md-4 mb-4">
-      <div class="py-5">
-
-        <div class="filter-group mb-4">
-          <h6 class="fw-bold mb-3 d-flex justify-content-between align-items-center">
-            Brand
-            <i class="fa-solid fa-chevron-down small text-muted"></i>
-          </h6>
-          <input type="text" class="form-control form-control-sm mb-2" placeholder="Search" />
-          <div class="form-check small mb-2">
-            <input class="form-check-input" type="checkbox" id="apple">
-            <label class="form-check-label" for="apple">Apple</label>
-          </div>
-          <div class="form-check small mb-2">
-            <input class="form-check-input" type="checkbox" id="samsung">
-            <label class="form-check-label" for="samsung">Samsung</label>
-          </div>
-          <div class="form-check small mb-2">
-            <input class="form-check-input" type="checkbox" id="xiaomi">
-            <label class="form-check-label" for="xiaomi">Xiaomi</label>
-          </div>
-          <div class="form-check small mb-2">
-            <input class="form-check-input" type="checkbox" id="oppo">
-            <label class="form-check-label" for="oppo">OPPO</label>
-          </div>
-        </div>
-
-
+  <!-- Search Bar -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="search-container">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Search products..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+        />
+        @if (searchTerm) {
+        <button
+          class="clear-search-btn"
+          (click)="searchTerm = ''; onSearchChange()"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+        }
       </div>
     </div>
+  </div>
 
-    <!-- ===== Main Product Grid ===== -->
-    <div class="col-lg-9 col-md-8">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <span class="fw-semibold">Selected Products: {{ products.length }}</span>
-        <select class="form-select form-select-sm w-auto">
-          <option selected>By rating</option>
-          <option>By price (low → high)</option>
-          <option>By price (high → low)</option>
-        </select>
+  <div class="container">
+    <div class="row">
+      <!-- ===== Filters Sidebar ===== -->
+      <div class="col-lg-3 col-md-4 mb-4">
+        <div class="filters-sidebar">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Filters</h5>
+            <button
+              class="btn btn-sm btn-link text-danger"
+              (click)="clearFilters()"
+            >
+              Clear All
+            </button>
+          </div>
+
+          <!-- Brand Filter -->
+          <div class="filter-group mb-4">
+            <h6
+              class="fw-bold mb-3 d-flex justify-content-between align-items-center"
+            >
+              Brand
+              <i class="bi bi-chevron-down small text-muted"></i>
+            </h6>
+            <input
+              type="text"
+              class="form-control form-control-sm mb-2"
+              placeholder="Search brands..."
+              [(ngModel)]="brandSearchTerm"
+            />
+            <div class="filter-options">
+              @for (brand of getFilteredBrands(); track brand._id) {
+              <div class="form-check small mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'brand-' + brand._id"
+                  [checked]="isBrandSelected(brand._id)"
+                  (change)="toggleBrand(brand._id)"
+                />
+                <label class="form-check-label" [for]="'brand-' + brand._id">
+                  {{ brand.name }}
+                </label>
+              </div>
+              }
+            </div>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="filter-group mb-4">
+            <h6
+              class="fw-bold mb-3 d-flex justify-content-between align-items-center"
+            >
+              Category
+              <i class="bi bi-chevron-down small text-muted"></i>
+            </h6>
+            <div class="filter-options">
+              @for (category of categories; track category._id) {
+              <div class="form-check small mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'category-' + category._id"
+                  [checked]="isCategorySelected(category._id)"
+                  (change)="toggleCategory(category._id)"
+                />
+                <label
+                  class="form-check-label"
+                  [for]="'category-' + category._id"
+                >
+                  {{ category.name }}
+                </label>
+              </div>
+              }
+            </div>
+          </div>
+
+          <!-- Price Range Filter -->
+          <div class="filter-group mb-4">
+            <h6 class="fw-bold mb-3">Price Range</h6>
+            <div class="price-inputs mb-3">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="small text-muted">Min</label>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="priceRange.min"
+                    [min]="minPrice"
+                    [max]="priceRange.max"
+                    (ngModelChange)="onPriceRangeChange()"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="small text-muted">Max</label>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    [(ngModel)]="priceRange.max"
+                    [min]="priceRange.min"
+                    [max]="maxPrice"
+                    (ngModelChange)="onPriceRangeChange()"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="price-display">
+              <span class="small text-muted"
+                >{{ priceRange.min }} EGP - {{ priceRange.max }} EGP</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Product Grid -->
-      <div class="row g-4">
-        @for (product of products; track product.id) {
+      <!-- ===== Main Product Grid ===== -->
+      <div class="col-lg-9 col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <span class="fw-semibold">
+            <span class="text-muted">Showing</span> {{ products.length }}
+            <span class="text-muted">of</span> {{ totalItems }}
+            <span class="text-muted">products</span>
+          </span>
+          <select
+            class="form-select form-select-sm w-auto"
+            [(ngModel)]="sortBy"
+            (ngModelChange)="onSortChange()"
+          >
+            <option value="rating">By rating</option>
+            <option value="price-low">By price (low → high)</option>
+            <option value="price-high">By price (high → low)</option>
+            <option value="name">By name (A → Z)</option>
+          </select>
+        </div>
+
+        <!-- Active Filters -->
+        @if (selectedBrands.size > 0 || selectedCategories.size > 0 ||
+        searchTerm) {
+        <div class="active-filters mb-3">
+          @if (searchTerm) {
+          <span class="filter-tag">
+            Search: "{{ searchTerm }}"
+            <i class="bi bi-x" (click)="searchTerm = ''; onSearchChange()"></i>
+          </span>
+          } @for (brandId of selectedBrands; track brandId) {
+          <span class="filter-tag">
+            {{ getBrandName(brandId) }}
+            <i class="bi bi-x" (click)="toggleBrand(brandId)"></i>
+          </span>
+          } @for (categoryId of selectedCategories; track categoryId) {
+          <span class="filter-tag">
+            {{ getCategoryName(categoryId) }}
+            <i class="bi bi-x" (click)="toggleCategory(categoryId)"></i>
+          </span>
+          }
+        </div>
+        }
+
+        <!-- Product Grid -->
+        @if (products.length > 0) {
+        <div class="row g-4">
+          @for (product of products; track product.id) {
           <div class="col-md-4 col-sm-6">
             <app-product-card [product]="product"></app-product-card>
           </div>
+          }
+        </div>
+
+        <!-- Pagination -->
+        <pagination
+          [totalItems]="totalItems"
+          [(ngModel)]="currentPage"
+          [itemsPerPage]="itemsPerPage"
+          (pageChanged)="pageChanged($event)"
+          previousText="‹ Prev"
+          nextText="Next ›"
+          class="justify-content-center mt-4"
+        >
+        </pagination>
+        } @else {
+        <div class="empty-state">
+          <i class="bi bi-inbox"></i>
+          <h4>No products found</h4>
+          <p>Try adjusting your filters or search term</p>
+          <button class="btn btn-dark" (click)="clearFilters()">
+            Clear Filters
+          </button>
+        </div>
         }
       </div>
-
-      <!-- Pagination -->
-      <pagination
-        [totalItems]="totalItems"
-        [(ngModel)]="currentPage"
-        [itemsPerPage]="itemsPerPage"
-        (pageChanged)="pageChanged($event)"
-        previousText="‹ Prev"
-        nextText="Next ›"
-        class="justify-content-center mt-4">
-      </pagination>
     </div>
-  </div>
   </div>
 </div>

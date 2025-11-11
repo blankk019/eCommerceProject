@@ -4,11 +4,12 @@ import { CartService } from '../../core/services/cart.service';
 import { ProductElement } from '../../shared/models/cart.model';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [FormsModule, CurrencyPipe],
+  imports: [FormsModule, CurrencyPipe, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
@@ -20,8 +21,9 @@ export class CartComponent implements OnInit {
   total: number = 0;
   discountCode: string = '';
   discountApplied: boolean = false;
+  cartId!: string;
 
-  _cartService = inject(CartService);
+  private _cartService = inject(CartService);
 
   applyDiscount(): void {
     if (this.discountCode === 'ANG25OFF') {
@@ -71,7 +73,7 @@ export class CartComponent implements OnInit {
       next: (response) => {
         console.log('Item removed from cart:', response.status);
         this.cartItems = this.cartItems.filter(
-          (item) => item._id !== productId
+          (item) => item.product._id !== productId
         );
       },
       error: (error) => {
@@ -84,6 +86,8 @@ export class CartComponent implements OnInit {
     // Fetch cart items from service and calculate totals
     this._cartService.getCart().subscribe({
       next: (response) => {
+        console.log('Cart id fetched:', response.cartId);
+        this.cartId = response.cartId;
         this.cartItems = response.data.products;
         this.subtotal = response.data.totalCartPrice;
         this.estimatedTax = this.subtotal * 0.1;

@@ -1,0 +1,128 @@
+<div class="orders-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">My Orders</h1>
+    <p class="page-subtitle">View and track all your orders</p>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+  <div class="loading-state">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3">Loading your orders...</p>
+  </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading && orders.length === 0) {
+  <div class="empty-state">
+    <i class="bi bi-bag-x"></i>
+    <h3>No Orders Yet</h3>
+    <p>You haven't placed any orders yet.</p>
+    <a routerLink="/products" class="btn btn-primary">Start Shopping</a>
+  </div>
+  }
+
+  <!-- Orders List -->
+  @if (!isLoading && orders.length > 0) {
+  <div class="orders-list">
+    @for (order of orders; track order._id) {
+    <div class="order-card">
+      <!-- Order Header -->
+      <div class="order-header">
+        <div class="order-info">
+          <div class="order-id">
+            <span class="label">Order ID:</span>
+            <span class="value">{{ order._id.substring(0, 12) }}...</span>
+          </div>
+          <div class="order-date">
+            <i class="bi bi-calendar3"></i>
+            {{ formatDate(order.createdAt) }}
+          </div>
+        </div>
+        <div class="order-status">
+          <span class="status-badge" [ngClass]="getStatusClass(order)">
+            {{ getOrderStatus(order) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Order Items -->
+      <div class="order-items">
+        @for (item of order.cartItems; track item._id) {
+        <div class="order-item">
+          <div class="item-image">
+            <img [src]="item.product.imageCover" [alt]="item.product.title" />
+          </div>
+          <div class="item-details">
+            <h4 class="item-title">{{ item.product.title }}</h4>
+            <div class="item-meta">
+              <span class="item-brand">
+                <i class="bi bi-tag"></i>
+                {{ item.product.brand.name }}
+              </span>
+              <span class="item-quantity">Qty: {{ item.count }}</span>
+            </div>
+          </div>
+          <div class="item-price">
+            <span class="price">{{ item.price }} EGP</span>
+            @if (item.count > 1) {
+            <span class="subtotal"
+              >Subtotal: {{ item.price * item.count }} EGP</span
+            >
+            }
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <div class="summary-row">
+          <span class="summary-label">Subtotal:</span>
+          <span class="summary-value">{{ getSubtotal(order) }} EGP</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Shipping:</span>
+          <span class="summary-value">{{ getShipping(order) }} EGP</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Tax (10%):</span>
+          <span class="summary-value">{{ getTax(order) }} EGP</span>
+        </div>
+        <div class="summary-row total">
+          <span class="summary-label">Total:</span>
+          <span class="summary-value">{{ getTotal(order) }} EGP</span>
+        </div>
+      </div>
+
+      <!-- Order Footer -->
+      <div class="order-footer">
+        <div class="payment-method">
+          <i class="bi bi-credit-card"></i>
+          <span>{{
+            order.paymentMethodType === "card"
+              ? "Card Payment"
+              : "Cash on Delivery"
+          }}</span>
+          @if (order.isPaid) {
+          <span class="paid-badge">Paid</span>
+          }
+        </div>
+        @if (order.shippingAddress) {
+        <div class="shipping-address">
+          <i class="bi bi-geo-alt"></i>
+          <span
+            >{{ order.shippingAddress.city }},
+            {{ order.shippingAddress.details }}</span
+          >
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
