@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 export class CartService {
   constructor(private _HttpClient: HttpClient) {}
 
-  //static URL and headers
   apiUrl = 'https://ecommerce.routemisr.com/api/v1/cart';
   myHeader = { token: localStorage.getItem('userToken') || '' };
 
