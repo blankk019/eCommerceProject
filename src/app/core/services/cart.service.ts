@@ -17,30 +17,25 @@ export class CartService {
     return this._HttpClient.post(
       this.apiUrl,
       { productId: id },
-      { headers: this.myHeader }
     );
   }
 
   getCart(): Observable<CartModel> {
-    return this._HttpClient.get<CartModel>(this.apiUrl, {
-      headers: this.myHeader,
-    });
+    return this._HttpClient.get<CartModel>(this.apiUrl);
   }
 
   updateCartQuantity(itemCount: number, productId: string): Observable<any> {
     return this._HttpClient.put(
       `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
       { count: itemCount },
-      { headers: this.myHeader }
+      
     );
   }
 
   deleteFromCart(productId: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
-      {
-        headers: this.myHeader,
-      }
+      `https://ecommerce.routemisr.com/api/v1/cart/${productId}`
+     
     );
   }
 }
