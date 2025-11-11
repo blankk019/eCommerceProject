@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
-import { ShippingComponent } from './features/checkout/components/shipping/shipping.component';
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 
-export const routes: Routes = [
-  // 🔹 Auth layout routes (lazy loaded)
-import { ProductDetailsComponent } from './features/product-details/product-details.component';
-import { ForgotPasswordComponent } from './features/forgot-password/forgot-password.component';
-import { CheckoutComponent } from './features/checkout/checkout.component';
-import { AddressComponent } from './features/checkout/components/address/address.component';
-import { ReceiptComponent } from './features/receipt/receipt.component';
 
 export const routes: Routes = [
   {
@@ -35,9 +27,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
       },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-      { path: 'forgot-password', component: ForgotPasswordComponent },
+    
     ],
   },
 
@@ -89,27 +79,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/brands/brand-product/brand-product.component').then(m => m.BrandProductComponent),
       },
-      { path: 'home', component: HomeComponent },
-      { path: 'products', component: ProductsComponent },
-      { path: 'brands', component: BrandsComponent },
-      { path: 'cart', component: CartComponent },
-      { path: 'product-details/:id', component: ProductDetailsComponent },
-      { path: 'brands/:brandId/products', component: BrandProductComponent },
-      { path: 'cart', component: CartComponent },
+   
       {
         path: 'checkout/:cartId',
-        component: CheckoutComponent,
+        loadComponent: () => import('./features/checkout/checkout.component').then(m => m.CheckoutComponent),
         children: [
           { path: '', redirectTo: 'address', pathMatch: 'full' },
-          { path: 'address', component: AddressComponent },
-          { path: 'shipping/:addressId', component: ShippingComponent },
+          { path: 'address', loadComponent: () => import('./features/checkout/components/address/address.component').then(m => m.AddressComponent)},
+          { path: 'shipping/:addressId', loadComponent: () => import('./features/checkout/components/shipping/shipping.component').then(m => m.ShippingComponent) },
         ],
       },
-      { path: 'allorders', component: ReceiptComponent },
+      { path: 'allorders', loadComponent: () => import('./features/receipt/receipt.component').then(m => m.ReceiptComponent) },
     ],
   },
 
-  // 🔹 404 page
   {
     path: '**',
     loadComponent: () =>
