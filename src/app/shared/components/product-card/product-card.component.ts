@@ -1,6 +1,6 @@
 import { Component, Input, inject, OnDestroy } from '@angular/core';
 //import { Product } from '../../models/product.model';
-import { CurrencyPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { CartService } from '../../../core/services/cart.service';
 import { RouterLink } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [RouterLink, CurrencyPipe, NgClass],
+  imports: [RouterLink, NgClass],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',
 })
