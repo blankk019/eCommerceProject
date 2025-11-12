@@ -5,6 +5,7 @@ import { IProduct } from '../../core/interfaces/iproduct';
 import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
 import { CartService } from '../../core/services/cart.service';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-details',
@@ -19,6 +20,7 @@ export class ProductDetailsComponent {
   private readonly _ProductsService = inject(ProductsService);
    _cartService = inject(CartService);
    _WishlistService = inject(WishlistService);
+   _ToastrService = inject(ToastrService)
   
  
   customOptionsDetails: OwlOptions = {
@@ -48,9 +50,7 @@ export class ProductDetailsComponent {
           console.log(res.data);
           this.detailsProduct = res.data;
         },
-        error: (err) => {
-          console.log(err);
-        }
+       
       });
     }
    })
@@ -62,10 +62,9 @@ export class ProductDetailsComponent {
       this._cartService.addToCart(productId).subscribe({
         next: (response) => {
           console.log('Product added to cart:', response);
+          this._ToastrService.success(response.message, "cyber")
         },
-        error: (error) => {
-          console.error('Error adding product to cart:', error);
-        },
+        
       });
     }
   
@@ -73,6 +72,7 @@ export class ProductDetailsComponent {
       this._WishlistService.addToWishList(productId).subscribe({
         next: (response) => {
           console.log('Product added to WishList:', response);
+          this._ToastrService.success(response.message, "cyber")
         },
        
       });

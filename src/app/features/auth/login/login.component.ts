@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -13,8 +14,7 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginComponent {
  private readonly _AuthService = inject(AuthService);
   private readonly _Router = inject(Router);
-  errorMsg: string = '';
-  msgSuccess: boolean = false;
+  private readonly _ToastrService = inject(ToastrService);
   isLoading: boolean = false;
 
 
@@ -31,7 +31,7 @@ export class LoginComponent {
         next: (res) => {
           console.log(res);
           if(res.message === 'success') {
-            this.msgSuccess = true;
+            this._ToastrService.success("Logged in successfully!", 'Cyber')
             setTimeout(() => {
 
               localStorage.setItem('userToken', res.token);
@@ -44,11 +44,7 @@ export class LoginComponent {
           }
           this.isLoading = false;
         },
-        error : (err) => {
-          this.errorMsg = err.error.message;
-          console.log(err);
-          this.isLoading = false;
-        }
+      
       })
     }
     else {

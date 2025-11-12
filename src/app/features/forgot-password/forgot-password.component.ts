@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,10 +16,9 @@ export class ForgotPasswordComponent {
 
   private readonly _AuthService = inject(AuthService);
   private readonly _Router = inject(Router);
+  private readonly _ToastrService = inject(ToastrService);
 
   order:number = 1;
-  errorMsg: string = '';
-  msgSuccess: boolean = false;
   verifyEmailLoading: boolean = false;
   verifyCodeLoading: boolean = false;
   resetPasswordLoading: boolean = false;
@@ -53,7 +53,6 @@ export class ForgotPasswordComponent {
       },
       error: (error : HttpErrorResponse) => {
         this.verifyEmailLoading = false;
-        this.errorMsg = error.error.message;
 
         console.log(error);
       }
@@ -72,7 +71,6 @@ export class ForgotPasswordComponent {
       },
       error: (error : HttpErrorResponse) => {
         this.verifyCodeLoading = false;
-        this.errorMsg = error.error.message;
         console.log(error);
       }
     })
@@ -83,7 +81,7 @@ export class ForgotPasswordComponent {
     this.resetPasswordLoading = true;
     this._AuthService.setResetPassword(this.resetPassword.value).subscribe({
       next: (res) => {
-      this.msgSuccess = true;
+        this._ToastrService.success('Password has been reset successfully!', 'Cyber')
       setTimeout(() => {
         localStorage.setItem('userToken', res.token);
         this._AuthService.saveUserData();
@@ -94,7 +92,6 @@ export class ForgotPasswordComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.resetPasswordLoading = false;
-        this.errorMsg = error.error.message;
         console.log(error);
       }
     })
