@@ -71,6 +71,17 @@
           </a>
         </li>
         -->
+        @if(_PwaService.showInstallPrompt && !_PwaService.isInstalled()) {
+        <li class="nav-item">
+          <button
+            class="btn btn-sm btn-install-pwa ms-2 me-2"
+            (click)="installPwa()"
+            title="Install App"
+          >
+            <i class="fa-solid fa-download me-1"></i> Install App
+          </button>
+        </li>
+        }
         <li class="nav-item">
           <a
             class="nav-link"

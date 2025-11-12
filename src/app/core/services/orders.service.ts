@@ -11,12 +11,18 @@ export class OrdersService {
 
   private readonly baseUrl = 'https://ecommerce.routemisr.com/api/v1/orders';
   private readonly headers = { token: localStorage.getItem('userToken') || '' };
+  private getAppUrl(): string {
+    return window.location.origin;
+  }
+
   // checkout session
   checkOutSession(
     cartId: string,
     shippingAddress: SingleAddress
   ): Observable<OrderResponse> {
-    const url = `${this.baseUrl}/checkout-session/${cartId}?url=http://localhost:4200`;
+    const url = `${
+      this.baseUrl
+    }/checkout-session/${cartId}?url=${this.getAppUrl()}`;
     return this._HttpClient.post<OrderResponse>(
       url,
       { shippingAddress: shippingAddress },

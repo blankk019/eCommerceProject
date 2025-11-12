@@ -12,7 +12,7 @@ import { CartService } from '../../core/services/cart.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, RouterLink, ProductCardComponent],
+  imports: [CarouselModule, ProductCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
