@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { inject } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
 import { ProductElement } from '../../shared/models/cart.model';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cartItems: ProductElement[] = [];
   subtotal: number = 0;
   estimatedTax: number = 0;
@@ -22,6 +23,7 @@ export class CartComponent implements OnInit {
   discountCode: string = '';
   discountApplied: boolean = false;
   cartId!: string;
+  private subscriptions = new Subscription();
 
   private _cartService = inject(CartService);
 
@@ -37,39 +39,48 @@ export class CartComponent implements OnInit {
     //decrease count
     if (count > 1) count--;
     //calls upon the service
-    this._cartService.updateCartQuantity(count, productId).subscribe({
-      next: (response) => {
-        console.log('Cart quantity updated:', response.status);
-        this.cartItems = response.data.products;
-        this.subtotal = response.data.totalCartPrice;
-        this.estimatedTax = this.subtotal * 0.1;
-        this.total = this.subtotal + this.estimatedTax + this.shippingHandling;
-      },
-      error: (error) => {
-        console.error('Error updating cart quantity:', error);
-      },
-    });
+    const decSub = this._cartService
+      .updateCartQuantity(count, productId)
+      .subscribe({
+        next: (response) => {
+          console.log('Cart quantity updated:', response.status);
+          this.cartItems = response.data.products;
+          this.subtotal = response.data.totalCartPrice;
+          this.estimatedTax = this.subtotal * 0.1;
+          this.total =
+            this.subtotal + this.estimatedTax + this.shippingHandling;
+        },
+        error: (error) => {
+          console.error('Error updating cart quantity:', error);
+        },
+      });
+    this.subscriptions.add(decSub);
   }
+
   incCount(productId: string, count: number): void {
     //increase count
     count++;
     //calls upon the service
-    this._cartService.updateCartQuantity(count, productId).subscribe({
-      next: (response) => {
-        console.log('Cart quantity updated:', response.status);
-        this.cartItems = response.data.products;
-        this.subtotal = response.data.totalCartPrice;
-        this.estimatedTax = this.subtotal * 0.1;
-        this.total = this.subtotal + this.estimatedTax + this.shippingHandling;
-      },
-      error: (error) => {
-        console.error('Error updating cart quantity:', error);
-      },
-    });
+    const incSub = this._cartService
+      .updateCartQuantity(count, productId)
+      .subscribe({
+        next: (response) => {
+          console.log('Cart quantity updated:', response.status);
+          this.cartItems = response.data.products;
+          this.subtotal = response.data.totalCartPrice;
+          this.estimatedTax = this.subtotal * 0.1;
+          this.total =
+            this.subtotal + this.estimatedTax + this.shippingHandling;
+        },
+        error: (error) => {
+          console.error('Error updating cart quantity:', error);
+        },
+      });
+    this.subscriptions.add(incSub);
   }
 
   deleteFromCart(productId: string): void {
-    this._cartService.deleteFromCart(productId).subscribe({
+    const deleteSub = this._cartService.deleteFromCart(productId).subscribe({
       next: (response) => {
         console.log('Item removed from cart:', response.status);
         this.cartItems = this.cartItems.filter(
@@ -80,11 +91,12 @@ export class CartComponent implements OnInit {
         console.error('Error removing item from cart:', error);
       },
     });
+    this.subscriptions.add(deleteSub);
   }
 
   ngOnInit(): void {
     // Fetch cart items from service and calculate totals
-    this._cartService.getCart().subscribe({
+    const cartSub = this._cartService.getCart().subscribe({
       next: (response) => {
         console.log('Cart id fetched:', response.cartId);
         this.cartId = response.cartId;
@@ -98,5 +110,10 @@ export class CartComponent implements OnInit {
         console.error('Error fetching cart items:', error);
       },
     });
+    this.subscriptions.add(cartSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

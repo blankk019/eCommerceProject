@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
 import { BrandsService } from '../../core/services/brands.service';
 import { CategoriesService } from '../../core/services/categories.service';
@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { Subscription } from 'rxjs';
 
 interface Category {
   _id: string;
@@ -30,7 +31,7 @@ interface Category {
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   allProducts: IProduct[] = [];
   filteredProducts: IProduct[] = [];
@@ -51,6 +52,7 @@ export class ProductsComponent {
   maxPrice: number = 100000;
   priceRange: { min: number; max: number } = { min: 0, max: 100000 };
   sortBy: string = 'rating';
+  private subscriptions = new Subscription();
 
   private readonly _ProductsService = inject(ProductsService);
   private readonly _BrandsService = inject(BrandsService);
@@ -62,9 +64,13 @@ export class ProductsComponent {
     this.loadAllProducts();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   // Load ALL products at once
   loadAllProducts() {
-    this._ProductsService.getAllProducts().subscribe({
+    const productsSub = this._ProductsService.getAllProducts().subscribe({
       next: (res) => {
         console.log('All products loaded:', res.data);
         this.allProducts = res.data;
@@ -72,22 +78,25 @@ export class ProductsComponent {
         this.applyFilters();
       },
     });
+    this.subscriptions.add(productsSub);
   }
 
   loadBrands() {
-    this._BrandsService.getAllBrands().subscribe({
+    const brandsSub = this._BrandsService.getAllBrands().subscribe({
       next: (res) => {
         this.brands = res.data;
       },
     });
+    this.subscriptions.add(brandsSub);
   }
 
   loadCategories() {
-    this._CategoriesService.getAllCategories().subscribe({
+    const categoriesSub = this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
         this.categories = res.data;
       },
     });
+    this.subscriptions.add(categoriesSub);
   }
 
   calculatePriceRange() {
