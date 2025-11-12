@@ -1,5 +1,5 @@
 import { CartService } from './../../../../core/services/cart.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { CartModel } from '../../../../shared/models/cart.model';
 import { OrdersService } from '../../../../core/services/orders.service';
 import { AddressService } from '../../../../core/services/address.service';
 import { SingleAddress } from '../../../../shared/models/address.model';
+import { Subscription } from 'rxjs';
 
 interface ShippingMethod {
   id: string;
@@ -25,7 +26,7 @@ interface ShippingMethod {
   templateUrl: './shipping.component.html',
   styleUrl: './shipping.component.css',
 })
-export class ShippingComponent implements OnInit {
+export class ShippingComponent implements OnInit, OnDestroy {
   cartId: string | null = null;
   addressId: string | null = null;
 
@@ -34,6 +35,8 @@ export class ShippingComponent implements OnInit {
   selectedDeliveryDate: string | null = null;
   showDatePicker: boolean = false;
   cart: CartModel | null = null;
+  private subscriptions = new Subscription();
+
   constructor(
     private _CartService: CartService,
     private _OrdersService: OrdersService,
@@ -44,19 +47,27 @@ export class ShippingComponent implements OnInit {
 
   ngOnInit(): void {
     // Get cartId from parent route
-    this.route.parent?.paramMap.subscribe((params) => {
+    const parentRouteSub = this.route.parent?.paramMap.subscribe((params) => {
       this.cartId = params.get('cartId');
       console.log('Cart ID in shipping component:', this.cartId);
     });
+    if (parentRouteSub) {
+      this.subscriptions.add(parentRouteSub);
+    }
 
     // Get addressId from current route
-    this.route.paramMap.subscribe((params) => {
+    const routeSub = this.route.paramMap.subscribe((params) => {
       this.addressId = params.get('addressId');
       console.log('Address ID in shipping component:', this.addressId);
     });
+    this.subscriptions.add(routeSub);
 
     // Load shipping methods
     this.loadShippingMethods();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   loadShippingMethods(): void {
@@ -119,46 +130,50 @@ export class ShippingComponent implements OnInit {
     }
 
     // Get address by ID from the address service
-    this._AddressService.getAddressById(this.addressId).subscribe({
-      next: (response) => {
-        console.log('Address fetched:', response);
+    const addressSub = this._AddressService
+      .getAddressById(this.addressId)
+      .subscribe({
+        next: (response) => {
+          console.log('Address fetched:', response);
 
-        const address = response.data;
+          const address = response.data;
 
-        // Extract into SingleAddress variable
-        const singleAddress: SingleAddress = {
-          details: address.details,
-          phone: address.phone,
-          city: address.city,
-        };
+          // Extract into SingleAddress variable
+          const singleAddress: SingleAddress = {
+            details: address.details,
+            phone: address.phone,
+            city: address.city,
+          };
 
-        console.log('SingleAddress created:', singleAddress);
+          console.log('SingleAddress created:', singleAddress);
 
-        // Pass to checkOutSession method
-        this._OrdersService
-          .checkOutSession(this.cartId!, singleAddress)
-          .subscribe({
-            next: (response) => {
-              console.log('Checkout session created:', response);
+          // Pass to checkOutSession method
+          const checkoutSub = this._OrdersService
+            .checkOutSession(this.cartId!, singleAddress)
+            .subscribe({
+              next: (response) => {
+                console.log('Checkout session created:', response);
 
-              // Open Stripe URL in new window
-              if (response.session && response.session.url) {
-                window.open(response.session.url, '_blank');
-              } else {
-                alert('Payment URL not received');
-              }
-            },
-            error: (err) => {
-              console.error('Error creating checkout session:', err);
-              alert('Failed to create checkout session');
-            },
-          });
-      },
-      error: (err) => {
-        console.error('Error fetching address:', err);
-        alert('Failed to fetch address details');
-      },
-    });
+                // Open Stripe URL in new window
+                if (response.session && response.session.url) {
+                  window.open(response.session.url, '_blank');
+                } else {
+                  alert('Payment URL not received');
+                }
+              },
+              error: (err) => {
+                console.error('Error creating checkout session:', err);
+                alert('Failed to create checkout session');
+              },
+            });
+          this.subscriptions.add(checkoutSub);
+        },
+        error: (err) => {
+          console.error('Error fetching address:', err);
+          alert('Failed to fetch address details');
+        },
+      });
+    this.subscriptions.add(addressSub);
   }
 
   proceedToNext(): void {

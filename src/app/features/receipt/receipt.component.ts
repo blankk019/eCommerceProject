@@ -1,9 +1,10 @@
 import { CartService } from '../../core/services/cart.service';
 import { OrdersService } from './../../core/services/orders.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { OrderResponse } from '../../shared/models/userOrder.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-receipt',
@@ -12,10 +13,11 @@ import { OrderResponse } from '../../shared/models/userOrder.model';
   templateUrl: './receipt.component.html',
   styleUrl: './receipt.component.css',
 })
-export class ReceiptComponent implements OnInit {
+export class ReceiptComponent implements OnInit, OnDestroy {
   userId: string = '';
   orders: OrderResponse[] = [];
   isLoading: boolean = true;
+  private subscriptions = new Subscription();
 
   constructor(
     private _OrdersService: OrdersService,
@@ -24,6 +26,10 @@ export class ReceiptComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserIdAndLoadOrders();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   getUserIdAndLoadOrders(): void {
@@ -39,7 +45,7 @@ export class ReceiptComponent implements OnInit {
 
   loadAllOrders(): void {
     this.isLoading = true;
-    this._OrdersService.getUserOrders(this.userId).subscribe({
+    const ordersSub = this._OrdersService.getUserOrders(this.userId).subscribe({
       next: (orders) => {
         console.log('User Orders:', orders);
         this.orders = orders;
@@ -50,6 +56,7 @@ export class ReceiptComponent implements OnInit {
         this.isLoading = false;
       },
     });
+    this.subscriptions.add(ordersSub);
   }
 
   formatDate(date: Date): string {
