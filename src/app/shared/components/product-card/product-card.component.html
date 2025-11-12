@@ -18,7 +18,7 @@
     class="fa fa-heart position-absolute top-0 end-0 m-3 fs-5 cursor-pointer"
     [ngClass]="{
       'fa-regular text-muted': !isInWishlist,
-      'fa-solid text-danger': isInWishlist
+      'fa-solid text-black': isInWishlist
     }"
     style="z-index:10"
     (click)="toggleWishList(product.id)"
