@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [RouterOutlet, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
 })

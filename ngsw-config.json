@@ -1,0 +1,74 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.csr.html",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "products-api",
+      "urls": [
+        "https://ecommerce.routemisr.com/api/v1/products",
+        "https://ecommerce.routemisr.com/api/v1/products/*"
+      ],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "1h",
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "categories-brands-api",
+      "urls": [
+        "https://ecommerce.routemisr.com/api/v1/categories",
+        "https://ecommerce.routemisr.com/api/v1/categories/*",
+        "https://ecommerce.routemisr.com/api/v1/brands",
+        "https://ecommerce.routemisr.com/api/v1/brands/*"
+      ],
+      "cacheConfig": {
+        "maxSize": 50,
+        "maxAge": "6h",
+        "timeout": "10s",
+        "strategy": "performance"
+      }
+    },
+    {
+      "name": "user-data-api",
+      "urls": [
+        "https://ecommerce.routemisr.com/api/v1/cart",
+        "https://ecommerce.routemisr.com/api/v1/wishlist",
+        "https://ecommerce.routemisr.com/api/v1/orders/*"
+      ],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "5m",
+        "timeout": "5s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}
