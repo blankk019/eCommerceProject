@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
 import { IProduct } from '../../core/interfaces/iproduct';
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ import { CartService } from '../../core/services/cart.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   private readonly _ProductsService = inject(ProductsService);
   private readonly _CategoriesService = inject(CategoriesService);
   private readonly _CartService = inject(CartService);
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   productsList: IProduct[] = [];
   categoriesList: ICategory[] = [];
 
-  getAllProductsSub!: Subscription;
+  private subscriptions = new Subscription();
 
   customOptionsCat: OwlOptions = {
     loop: true,
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this._CategoriesService.getAllCategories().subscribe({
+    const categoriesSub = this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
         console.log(res.data);
         this.categoriesList = res.data;
@@ -80,8 +80,9 @@ export class HomeComponent implements OnInit {
         console.log(err);
       },
     });
+    this.subscriptions.add(categoriesSub);
 
-    this.getAllProductsSub = this._ProductsService.getAllProducts().subscribe({
+    const productsSub = this._ProductsService.getAllProducts().subscribe({
       next: (res) => {
         console.log(res.data);
 
@@ -92,9 +93,10 @@ export class HomeComponent implements OnInit {
         console.log(err);
       },
     });
+    this.subscriptions.add(productsSub);
   }
 
   ngOnDestroy(): void {
-    this.getAllProductsSub?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

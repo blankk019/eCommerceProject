@@ -1,33 +1,33 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Iwishlist } from '../../core/interfaces/iwishlist';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { CartService } from '../../core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
   imports: [],
   templateUrl: './wishlist.component.html',
-  styleUrl: './wishlist.component.css'
+  styleUrl: './wishlist.component.css',
 })
-export class WishlistComponent implements OnInit {
-
-  _WishlistService = inject(WishlistService)
+export class WishlistComponent implements OnInit, OnDestroy {
+  _WishlistService = inject(WishlistService);
   _CartService = inject(CartService);
   _ToastrService = inject(ToastrService);
 
-  wishlistItems : Iwishlist['data'] = [];
+  wishlistItems: Iwishlist['data'] = [];
+  private subscriptions = new Subscription();
 
   ngOnInit(): void {
-     this._WishlistService.getWishList().subscribe({
+    const wishlistSub = this._WishlistService.getWishList().subscribe({
       next: (response) => {
-         this.wishlistItems = response.data || [];
-         console.log('Wishlist items fetched:', this.wishlistItems);
-    
+        this.wishlistItems = response.data || [];
+        console.log('Wishlist items fetched:', this.wishlistItems);
       },
-    
     });
+    this.subscriptions.add(wishlistSub);
   }
 
     addToCart(productId: string): void {
@@ -40,10 +40,24 @@ export class WishlistComponent implements OnInit {
         },
        
       });
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
- deleteFromWishlist(productId: string): void {
-    this._WishlistService.deleteFromWishlist(productId).subscribe({
+  addToCart(productId: string): void {
+    const cartSub = this._CartService.addToCart(productId).subscribe({
+      next: (res) => {
+        console.log('Added to cart:', res);
+        this.deleteFromWishlist(productId);
+      },
+    });
+    this.subscriptions.add(cartSub);
+  }
+
+  deleteFromWishlist(productId: string): void {
+    const deleteSub = this._WishlistService
+      .deleteFromWishlist(productId)
+      .subscribe({
         next: (res) => {
           console.log('Removed from wishlist:', res);
           this._ToastrService.success(res.message, "cyber")
@@ -51,9 +65,7 @@ export class WishlistComponent implements OnInit {
             (item) => item._id !== productId
           );
         },
-     
       });
+    this.subscriptions.add(deleteSub);
   }
-
-
 }

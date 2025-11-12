@@ -1,5 +1,5 @@
 import { Address } from './../../../../shared/models/address.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { AddressService } from '../../../../core/services/address.service';
@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-address',
@@ -16,11 +16,12 @@ import { Observable } from 'rxjs';
   templateUrl: './address.component.html',
   styleUrl: './address.component.css',
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnDestroy {
   addresses: Address[] = [];
   selectedAddressId: string | null = null;
   addFormOpen = false;
   cartId: string | null = null;
+  private subscriptions = new Subscription();
 
   //reactive add form
   addForm = new FormGroup({
@@ -40,18 +41,21 @@ export class AddressComponent implements OnInit {
         phone: this.addForm.value.phone!,
       };
 
-      this.addressService.addAddress(newAddress as Address).subscribe({
-        next: (response) => {
-          console.log('Address added successfully:', response);
-          // Reload all addresses from the server to get the complete list
-          this.loadAddresses();
-          this.addForm.reset();
-          this.addFormOpen = false;
-        },
-        error: (err) => {
-          console.error('Error adding address:', err);
-        },
-      });
+      const addSub = this.addressService
+        .addAddress(newAddress as Address)
+        .subscribe({
+          next: (response) => {
+            console.log('Address added successfully:', response);
+            // Reload all addresses from the server to get the complete list
+            this.loadAddresses();
+            this.addForm.reset();
+            this.addFormOpen = false;
+          },
+          error: (err) => {
+            console.error('Error adding address:', err);
+          },
+        });
+      this.subscriptions.add(addSub);
     } else {
       console.log('Form is invalid');
       // Mark all fields as touched to show validation errors
@@ -77,17 +81,24 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
     // Get cartId from parent route
-    this.route.parent?.paramMap.subscribe((params) => {
+    const routeSub = this.route.parent?.paramMap.subscribe((params) => {
       this.cartId = params.get('cartId');
       console.log('Cart ID in address component:', this.cartId);
     });
+    if (routeSub) {
+      this.subscriptions.add(routeSub);
+    }
 
     this.loadAddresses();
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   loadAddresses(): void {
     //load data  from API
-    this.addressService.getAddresses().subscribe({
+    const loadSub = this.addressService.getAddresses().subscribe({
       next: (response) => {
         this.addresses = response.data;
         console.log('Addresses loaded:', this.addresses);
@@ -96,6 +107,7 @@ export class AddressComponent implements OnInit {
         console.error('Error loading addresses:', err);
       },
     });
+    this.subscriptions.add(loadSub);
   }
 
   selectAddress(addressId: string): void {
@@ -109,7 +121,7 @@ export class AddressComponent implements OnInit {
 
   deleteAddress(addressId: string): void {
     // TODO: Implement delete functionality with API call
-    this.addressService.deleteAddress(addressId).subscribe({
+    const deleteSub = this.addressService.deleteAddress(addressId).subscribe({
       next: (response) => {
         console.log('Address deleted:', response);
         // Reload addresses after deletion
@@ -119,6 +131,7 @@ export class AddressComponent implements OnInit {
         console.error('Error deleting address:', err);
       },
     });
+    this.subscriptions.add(deleteSub);
   }
 
   goBack(): void {
