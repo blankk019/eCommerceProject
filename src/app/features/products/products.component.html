@@ -59,7 +59,10 @@
               [(ngModel)]="brandSearchTerm"
             />
             <div class="filter-options">
-              <div *ngFor="let brand of getFilteredBrands()" class="form-check small mb-2">
+              <div
+                *ngFor="let brand of getFilteredBrands()"
+                class="form-check small mb-2"
+              >
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -83,7 +86,10 @@
               <i class="bi bi-chevron-down small text-muted"></i>
             </h6>
             <div class="filter-options">
-              <div *ngFor="let category of categories" class="form-check small mb-2">
+              <div
+                *ngFor="let category of categories"
+                class="form-check small mb-2"
+              >
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -160,7 +166,12 @@
         </div>
 
         <!-- Active Filters -->
-        <div *ngIf="selectedBrands.size > 0 || selectedCategories.size > 0 || searchTerm" class="active-filters mb-3">
+        <div
+          *ngIf="
+            selectedBrands.size > 0 || selectedCategories.size > 0 || searchTerm
+          "
+          class="active-filters mb-3"
+        >
           <span *ngIf="searchTerm" class="filter-tag">
             Search: "{{ searchTerm }}"
             <i class="bi bi-x" (click)="searchTerm = ''; onSearchChange()"></i>
@@ -169,43 +180,46 @@
             {{ getBrandName(brandId) }}
             <i class="bi bi-x" (click)="toggleBrand(brandId)"></i>
           </span>
-          <span *ngFor="let categoryId of selectedCategories" class="filter-tag">
+          <span
+            *ngFor="let categoryId of selectedCategories"
+            class="filter-tag"
+          >
             {{ getCategoryName(categoryId) }}
             <i class="bi bi-x" (click)="toggleCategory(categoryId)"></i>
           </span>
         </div>
 
-        <!-- Product Grid / Empty State -->
-        <ng-container *ngIf="products.length > 0; else emptyState">
-          <div class="row g-4">
-            <div *ngFor="let product of products" class="col-md-4 col-sm-6">
-              <app-product-card [product]="product"></app-product-card>
-            </div>
+        <!-- Product Grid -->
+        @if (products.length > 0) {
+        <div class="row g-4">
+          @for (product of products; track product.id) {
+          <div class="col-md-4 col-sm-6">
+            <app-product-card [product]="product"></app-product-card>
           </div>
+          }
+        </div>
 
-          <!-- Pagination -->
-          <pagination
-            [totalItems]="totalItems"
-            [(ngModel)]="currentPage"
-            [itemsPerPage]="itemsPerPage"
-            (pageChanged)="pageChanged($event)"
-            previousText="‹ Prev"
-            nextText="Next ›"
-            class="justify-content-center mt-4"
-          >
-          </pagination>
-        </ng-container>
-
-        <ng-template #emptyState>
-          <div class="empty-state">
-            <i class="bi bi-inbox"></i>
-            <h4>No products found</h4>
-            <p>Try adjusting your filters or search term</p>
-            <button class="btn btn-dark" (click)="clearFilters()">
-              Clear Filters
-            </button>
-          </div>
-        </ng-template>
+        <!-- Pagination -->
+        <pagination
+          [totalItems]="totalItems"
+          [(ngModel)]="currentPage"
+          [itemsPerPage]="itemsPerPage"
+          (pageChanged)="pageChanged($event)"
+          previousText="‹ Prev"
+          nextText="Next ›"
+          class="justify-content-center mt-4"
+        >
+        </pagination>
+        } @else {
+        <div class="empty-state">
+          <i class="bi bi-inbox"></i>
+          <h4>No products found</h4>
+          <p>Try adjusting your filters or search term</p>
+          <button class="btn btn-dark" (click)="clearFilters()">
+            Clear Filters
+          </button>
+        </div>
+        }
       </div>
     </div>
   </div>

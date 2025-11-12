@@ -11,9 +11,13 @@
   </div>
 </div> -->
 
- <div class="card border-0 shadow-sm rounded-4 text-center p-3 h-100 position-relative">
-        
-        <i class="fa-regular fa-heart position-absolute top-0 end-0 m-3 fs-5 text-muted cursor-pointer" (click)="addToWishList(product.id)"></i>
+<div
+  class="card border-0 shadow-sm rounded-4 text-center p-3 h-100 position-relative"
+>
+  <i
+    class="fa-regular fa-heart position-absolute top-0 end-0 m-3 fs-5 text-muted cursor-pointer"
+    (click)="addToWishList(product.id)"
+  ></i>
 
   <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
     <img
@@ -38,7 +42,10 @@
     </div>
   </div>
 
-  <button class="btn btn-main rounded-3 fw-semibold py-2 w-100" (click)="addToCart(product.id)">
+  <button
+    class="btn btn-main rounded-3 fw-semibold py-2 w-100"
+    (click)="addToCart(product.id)"
+  >
     Add To Cart
   </button>
 </div>
