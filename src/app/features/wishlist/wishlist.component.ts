@@ -30,16 +30,6 @@ export class WishlistComponent implements OnInit, OnDestroy {
     this.subscriptions.add(wishlistSub);
   }
 
-    addToCart(productId: string): void {
-    this._CartService.addToCart(productId).subscribe({
-        next: (res) => {
-          console.log('Added to cart:', res);
-          this._ToastrService.success(res.message, "cyber")
-          this.deleteFromWishlist(productId);
-           
-        },
-       
-      });
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -48,6 +38,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
     const cartSub = this._CartService.addToCart(productId).subscribe({
       next: (res) => {
         console.log('Added to cart:', res);
+        this._ToastrService.success(res.message, "cyber")
         this.deleteFromWishlist(productId);
       },
     });
