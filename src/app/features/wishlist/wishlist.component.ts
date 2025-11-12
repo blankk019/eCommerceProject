@@ -1,0 +1,54 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { Iwishlist } from '../../core/interfaces/iwishlist';
+import { WishlistService } from '../../core/services/wishlist.service';
+import { CartService } from '../../core/services/cart.service';
+
+@Component({
+  selector: 'app-wishlist',
+  standalone: true,
+  imports: [],
+  templateUrl: './wishlist.component.html',
+  styleUrl: './wishlist.component.css'
+})
+export class WishlistComponent implements OnInit {
+
+  _WishlistService = inject(WishlistService)
+  _CartService = inject(CartService);
+
+  wishlistItems : Iwishlist['data'] = [];
+
+  ngOnInit(): void {
+     this._WishlistService.getWishList().subscribe({
+      next: (response) => {
+         this.wishlistItems = response.data || [];
+         console.log('Wishlist items fetched:', this.wishlistItems);
+    
+      },
+    
+    });
+  }
+
+    addToCart(productId: string): void {
+    this._CartService.addToCart(productId).subscribe({
+        next: (res) => {
+          console.log('Added to cart:', res);
+          this.deleteFromWishlist(productId);
+        },
+       
+      });
+  }
+
+ deleteFromWishlist(productId: string): void {
+    this._WishlistService.deleteFromWishlist(productId).subscribe({
+        next: (res) => {
+          console.log('Removed from wishlist:', res);
+          this.wishlistItems = this.wishlistItems.filter(
+            (item) => item._id !== productId
+          );
+        },
+     
+      });
+  }
+
+
+}

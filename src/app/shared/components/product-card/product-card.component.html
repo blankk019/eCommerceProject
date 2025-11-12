@@ -16,6 +16,7 @@
 >
   <i
     class="fa-regular fa-heart position-absolute top-0 end-0 m-3 fs-5 text-muted cursor-pointer"
+    (click)="addToWishList(product.id)"
   ></i>
 
   <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
