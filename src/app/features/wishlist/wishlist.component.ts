@@ -2,6 +2,7 @@ import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Iwishlist } from '../../core/interfaces/iwishlist';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { CartService } from '../../core/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class WishlistComponent implements OnInit, OnDestroy {
   _WishlistService = inject(WishlistService);
   _CartService = inject(CartService);
+  _ToastrService = inject(ToastrService);
 
   wishlistItems: Iwishlist['data'] = [];
   private subscriptions = new Subscription();
@@ -36,6 +38,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
     const cartSub = this._CartService.addToCart(productId).subscribe({
       next: (res) => {
         console.log('Added to cart:', res);
+        this._ToastrService.success(res.message, "cyber")
         this.deleteFromWishlist(productId);
       },
     });
@@ -48,6 +51,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           console.log('Removed from wishlist:', res);
+          this._ToastrService.success(res.message, "cyber")
           this.wishlistItems = this.wishlistItems.filter(
             (item) => item._id !== productId
           );

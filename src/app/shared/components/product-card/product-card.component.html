@@ -14,10 +14,17 @@
 <div
   class="card border-0 shadow-sm rounded-4 text-center p-3 h-100 position-relative"
 >
-  <i
-    class="fa-regular fa-heart position-absolute top-0 end-0 m-3 fs-5 text-muted cursor-pointer"
-    (click)="addToWishList(product.id)"
+ <i
+    class="fa fa-heart position-absolute top-0 end-0 m-3 fs-5 cursor-pointer"
+    [ngClass]="{
+      'fa-regular text-muted': !isInWishlist,
+      'fa-solid text-danger': isInWishlist
+    }"
+    style="z-index:10"
+    (click)="toggleWishList(product.id)"
   ></i>
+
+
 
   <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
     <img
