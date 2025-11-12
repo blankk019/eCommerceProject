@@ -1,5 +1,5 @@
 <section>
-    <h2 class="text-main mb-5 ">Login Now :</h2>
+  <h2 class="text-main mb-5 ">Login Now :</h2>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
 
    <div class="mb-3">
@@ -60,18 +60,8 @@
     }
 </button>
   </div>
+  </form>
+  </section>
+  
 
-  @if (errorMsg)
-    {
-      <div class="alert alert-danger mt-3">
-        <p class="m-0">{{ errorMsg }}</p>
-      </div>
-    }
-</form>
 
-@if (msgSuccess) {
-  <div class="alert alert-success mt-3" role="alert">
-   ✅ Logged in successfully
-  </div>
-}
-</section>

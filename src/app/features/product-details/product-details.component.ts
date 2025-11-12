@@ -5,6 +5,7 @@ import { IProduct } from '../../core/interfaces/iproduct';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { CartService } from '../../core/services/cart.service';
 import { WishlistService } from '../../core/services/wishlist.service';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,6 +18,11 @@ import { Subscription } from 'rxjs';
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _ProductsService = inject(ProductsService);
+   _cartService = inject(CartService);
+   _WishlistService = inject(WishlistService);
+   _ToastrService = inject(ToastrService)
+  
+ 
   _cartService = inject(CartService);
   _WishlistService = inject(WishlistService);
   private subscriptions = new Subscription();
@@ -64,6 +70,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+     addToCart(productId: string): void {
+      this._cartService.addToCart(productId).subscribe({
+        next: (response) => {
+          console.log('Product added to cart:', response);
+          this._ToastrService.success(response.message, "cyber")
+        },
+        
+      });
+    }
+  
+     addToWishList(productId: string): void {
+      this._WishlistService.addToWishList(productId).subscribe({
   addToCart(productId: string): void {
     const cartSub = this._cartService.addToCart(productId).subscribe({
       next: (response) => {
@@ -82,6 +100,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           console.log('Product added to WishList:', response);
+          this._ToastrService.success(response.message, "cyber")
         },
       });
     this.subscriptions.add(wishlistSub);

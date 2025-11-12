@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +17,7 @@ export class RegisterComponent {
 
   private readonly _AuthService = inject(AuthService);
   private readonly _Router = inject(Router);
-  errorMsg: string = '';
-  msgSuccess: boolean = false;
+  private readonly _ToastrService = inject(ToastrService)
   isLoading: boolean = false;
   registerSub!: Subscription;
 
@@ -37,18 +37,14 @@ export class RegisterComponent {
         next: (res) => {
           console.log(res);
           if(res.message === 'success') {
-            this.msgSuccess = true;
+            this._ToastrService.success("Registration successful! You can now log in.", 'Cyber')
             setTimeout(() => {
               this._Router.navigate(['/login']);
             }, 1500);
           }
           this.isLoading = false;
         },
-        error : (err) => {
-          this.errorMsg = err.error.message;
-          console.log(err);
-          this.isLoading = false;
-        }
+       
       })
     }
     else {

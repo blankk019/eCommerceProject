@@ -5,6 +5,7 @@ import { ProductElement } from '../../shared/models/cart.model';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -26,6 +27,7 @@ export class CartComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   private _cartService = inject(CartService);
+  _ToastrService = inject(ToastrService)
 
   applyDiscount(): void {
     if (this.discountCode === 'ANG25OFF') {
@@ -83,13 +85,12 @@ export class CartComponent implements OnInit, OnDestroy {
     const deleteSub = this._cartService.deleteFromCart(productId).subscribe({
       next: (response) => {
         console.log('Item removed from cart:', response.status);
+        this._ToastrService.success("Product Deleted From Cart Sucessfully", "cyber")
         this.cartItems = this.cartItems.filter(
           (item) => item.product._id !== productId
         );
       },
-      error: (error) => {
-        console.error('Error removing item from cart:', error);
-      },
+     
     });
     this.subscriptions.add(deleteSub);
   }
@@ -106,9 +107,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.shippingHandling = 5;
         this.total = this.subtotal + this.estimatedTax + this.shippingHandling;
       },
-      error: (error) => {
-        console.error('Error fetching cart items:', error);
-      },
+      
     });
     this.subscriptions.add(cartSub);
   }
