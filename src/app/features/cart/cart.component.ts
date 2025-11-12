@@ -46,6 +46,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           console.log('Cart quantity updated:', response.status);
+          this._ToastrService.success("Product Count Decreased Sucessfully", "cyber")
           this.cartItems = response.data.products;
           this.subtotal = response.data.totalCartPrice;
           this.estimatedTax = this.subtotal * 0.1;
@@ -68,6 +69,7 @@ export class CartComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           console.log('Cart quantity updated:', response.status);
+          this._ToastrService.success("Product Count Increased Sucessfully", "cyber")
           this.cartItems = response.data.products;
           this.subtotal = response.data.totalCartPrice;
           this.estimatedTax = this.subtotal * 0.1;

@@ -22,9 +22,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
    _WishlistService = inject(WishlistService);
    _ToastrService = inject(ToastrService)
   
- 
-  _cartService = inject(CartService);
-  _WishlistService = inject(WishlistService);
+
   private subscriptions = new Subscription();
 
   customOptionsDetails: OwlOptions = {
@@ -80,19 +78,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       });
     }
   
-     addToWishList(productId: string): void {
-      this._WishlistService.addToWishList(productId).subscribe({
-  addToCart(productId: string): void {
-    const cartSub = this._cartService.addToCart(productId).subscribe({
-      next: (response) => {
-        console.log('Product added to cart:', response);
-      },
-      error: (error) => {
-        console.error('Error adding product to cart:', error);
-      },
-    });
-    this.subscriptions.add(cartSub);
-  }
 
   addToWishList(productId: string): void {
     const wishlistSub = this._WishlistService

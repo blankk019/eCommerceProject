@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent implements OnDestroy {
+
   @Input({ required: true }) product!: IProduct;
   //@Input({ required: true }) product!: Product;
   _cartService = inject(CartService);
@@ -42,20 +43,13 @@ export class ProductCardComponent implements OnDestroy {
     this.subscriptions.add(cartSub);
   }
 
-   addToWishList(productId: string): void {
-    this._WishlistService.addToWishList(productId).subscribe({
-      next: (response) => {
-        console.log('Product added to WishList:', response);
-         this._ToastrService.success(response.message, "cyber")
-      },
-     
-    });
   addToWishList(productId: string): void {
     const wishlistSub = this._WishlistService
       .addToWishList(productId)
       .subscribe({
         next: (response) => {
           console.log('Product added to WishList:', response);
+          this._ToastrService.success(response.message, "cyber")
         },
       });
     this.subscriptions.add(wishlistSub);
