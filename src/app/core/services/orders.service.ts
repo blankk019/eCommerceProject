@@ -12,7 +12,7 @@ export class OrdersService {
   private readonly baseUrl = 'https://ecommerce.routemisr.com/api/v1/orders';
   private readonly headers = { token: localStorage.getItem('userToken') || '' };
   private getAppUrl(): string {
-    return window.location.origin;
+    return `${window.location.origin}/eCommerceProject`;
   }
 
   // checkout session
