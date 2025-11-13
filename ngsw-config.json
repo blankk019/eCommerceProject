@@ -61,7 +61,7 @@
       "urls": [
         "https://ecommerce.routemisr.com/api/v1/cart",
         "https://ecommerce.routemisr.com/api/v1/wishlist",
-        "https://ecommerce.routemisr.com/api/v1/orders/*"
+        "https://ecommerce.routemisr.com/api/v1/orders/user/*"
       ],
       "cacheConfig": {
         "maxSize": 20,
