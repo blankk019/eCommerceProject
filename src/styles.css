@@ -136,5 +136,23 @@ a:hover {
   border-bottom-right-radius: 10px;
 }
 
+/* Auth form container styling */
+.auth-form-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 2.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin: 1rem auto;
+}
+
+@media (max-width: 576px) {
+  .auth-form-container {
+    max-width: 100%;
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+}
 
 
