@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1763025438292,
+  "timestamp": 1763026154144,
   "index": "/eCommerceProject/index.html",
   "assetGroups": [
     {
@@ -142,7 +142,7 @@
       "patterns": [
         "https:\\/\\/ecommerce\\.routemisr\\.com\\/api\\/v1\\/cart",
         "https:\\/\\/ecommerce\\.routemisr\\.com\\/api\\/v1\\/wishlist",
-        "https:\\/\\/ecommerce\\.routemisr\\.com\\/api\\/v1\\/orders\\/[^/]*"
+        "https:\\/\\/ecommerce\\.routemisr\\.com\\/api\\/v1\\/orders\\/user\\/[^/]*"
       ],
       "strategy": "freshness",
       "maxSize": 20,
