@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1763299763765,
+  "timestamp": 1763300643728,
   "index": "/eCommerceProject/index.html",
   "assetGroups": [
     {
@@ -11,7 +11,6 @@
         "ignoreVary": true
       },
       "urls": [
-        "/eCommerceProject/chunk-26VX2TBM.js",
         "/eCommerceProject/chunk-2Y5VHX5Y.js",
         "/eCommerceProject/chunk-33ZX2OGH.js",
         "/eCommerceProject/chunk-3EQ36NFA.js",
@@ -24,6 +23,7 @@
         "/eCommerceProject/chunk-AHPHJBHB.js",
         "/eCommerceProject/chunk-AX2TRS6R.js",
         "/eCommerceProject/chunk-CMI5URR7.js",
+        "/eCommerceProject/chunk-COE2NT4L.js",
         "/eCommerceProject/chunk-CSRPLF5K.js",
         "/eCommerceProject/chunk-DDNMMLW6.js",
         "/eCommerceProject/chunk-DNL7RCYH.js",
@@ -48,7 +48,7 @@
         "/eCommerceProject/chunk-ZPB4TSYO.js",
         "/eCommerceProject/favicon.ico",
         "/eCommerceProject/index.html",
-        "/eCommerceProject/main-XNDVBHWT.js",
+        "/eCommerceProject/main-JBPRW3IO.js",
         "/eCommerceProject/manifest.webmanifest",
         "/eCommerceProject/polyfills-FFHMD2TL.js",
         "/eCommerceProject/scripts-SQ7W6IC7.js",
@@ -66,6 +66,7 @@
       "urls": [
         "/eCommerceProject/assets/images/American-Express-Color.png",
         "/eCommerceProject/assets/images/Banner.png",
+        "/eCommerceProject/assets/images/IphoneImage.png",
         "/eCommerceProject/assets/images/Logo.png",
         "/eCommerceProject/assets/images/amazon-pay.png",
         "/eCommerceProject/assets/images/banner-4.jpeg",
@@ -159,6 +160,7 @@
   "hashTable": {
     "/eCommerceProject/assets/images/American-Express-Color.png": "f1875a59674cafca7204130cff3077d62b682863",
     "/eCommerceProject/assets/images/Banner.png": "bc5ddb3c9e31b911dec6389a51ce95c00871905a",
+    "/eCommerceProject/assets/images/IphoneImage.png": "50bd2d7b1b85b96374701761f792f036be29f96b",
     "/eCommerceProject/assets/images/Logo.png": "51b78b217bf58dec326f09599876cd36a1d18710",
     "/eCommerceProject/assets/images/amazon-pay.png": "4785d3f12fd08c32b40b4193ab22abe125e87e16",
     "/eCommerceProject/assets/images/banner-4.jpeg": "bc694fda1e968d05ebde7e34732e39072f19f88b",
@@ -178,7 +180,6 @@
     "/eCommerceProject/assets/images/slider-image-1.jpeg": "8fe426e935ae4378195fe02d60169e03a37d73c7",
     "/eCommerceProject/assets/images/slider-image-2.jpeg": "2145ab8b69f6e37f57db50d9d55bd11d109f91c8",
     "/eCommerceProject/assets/images/slider-image-3.jpeg": "c5d3982eeb4da8e54a83d6e449cf2af29f4047ee",
-    "/eCommerceProject/chunk-26VX2TBM.js": "7af0ae45ef69353f3b87fc89fe34b515ff3d70f6",
     "/eCommerceProject/chunk-2Y5VHX5Y.js": "1056a3796161467c36a624b99f1881340287d1c7",
     "/eCommerceProject/chunk-33ZX2OGH.js": "7d15533f9d5fc42490646c29b5b55630b14e3ed2",
     "/eCommerceProject/chunk-3EQ36NFA.js": "183208b7b2c2986e5173ea752a22267a751e48d7",
@@ -191,6 +192,7 @@
     "/eCommerceProject/chunk-AHPHJBHB.js": "c71b71298a81e29d1aa0018f9bc358d962f91acc",
     "/eCommerceProject/chunk-AX2TRS6R.js": "733b2b6a3c359b309655dd85186f21b500982630",
     "/eCommerceProject/chunk-CMI5URR7.js": "dec3a6776a6f28936f5939d59d4299ae0eb39be7",
+    "/eCommerceProject/chunk-COE2NT4L.js": "e00b88d6edbccbe5ea7f1607f40941db5b70b828",
     "/eCommerceProject/chunk-CSRPLF5K.js": "54934f59805cfff15ac48b8f5afb3d7b45bbf454",
     "/eCommerceProject/chunk-DDNMMLW6.js": "092a4855147b83431f8d9e76070d8f24ad43b5d6",
     "/eCommerceProject/chunk-DNL7RCYH.js": "f33129d55d005f58e496eb0d21930d4a65c6c725",
@@ -222,8 +224,8 @@
     "/eCommerceProject/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/eCommerceProject/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/eCommerceProject/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/eCommerceProject/index.html": "2fbe6290afb069dc1bc783cd3921b94512fab815",
-    "/eCommerceProject/main-XNDVBHWT.js": "722ece3ca2e6014a18cb671848ab5c06fdaf31a5",
+    "/eCommerceProject/index.html": "892d53846cd9a8f23bc8a3c0209049cdea597d47",
+    "/eCommerceProject/main-JBPRW3IO.js": "c7b14e4bbfdf6cab52eceb47a0a09db4933bf550",
     "/eCommerceProject/manifest.webmanifest": "8a152867164fa7e4ed8e0790c8892aada22c6b9f",
     "/eCommerceProject/media/fa-brands-400-Q3XCMWHQ.woff2": "31c30351084e2670bbe5c47bd342e11540a68717",
     "/eCommerceProject/media/fa-brands-400-R2XQZCET.ttf": "da6f537cd597b76d264970f1c95e4beebc82fde9",
