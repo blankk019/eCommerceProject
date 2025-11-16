@@ -8,3 +8,34 @@
   background-color: #f9fafc;
   box-sizing: border-box;
 }
+
+@media (max-width: 992px) {
+  .brands-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 2rem 3rem;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .brands-container {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    padding: 2rem 1.5rem;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .brands-container {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .brands-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}

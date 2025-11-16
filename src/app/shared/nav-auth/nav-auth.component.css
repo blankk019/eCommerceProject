@@ -1,0 +1,233 @@
+.nav-back {
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.navbar-brand img {
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+  transform: scale(1.05);
+}
+
+.navbar-nav {
+  gap: 0.5rem;
+}
+
+.nav-item {
+  position: relative;
+}
+
+/* Icon Navigation Items */
+.nav-link i {
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover i {
+  transform: scale(1.1);
+}
+
+/* Profile Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.profile-dropdown {
+  min-width: 220px;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  margin-top: 0.5rem;
+  animation: slideDown 0.2s ease-out;
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 1000;
+  background: white;
+}
+
+.profile-dropdown.show {
+  display: block;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-dropdown .dropdown-item {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.profile-dropdown .dropdown-item:hover {
+  background: var(--bg-light);
+  color: var(--accent-color);
+  transform: translateX(4px);
+}
+
+.profile-dropdown .dropdown-item i {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  width: 20px;
+}
+
+.profile-dropdown .dropdown-item:hover i {
+  color: var(--accent-color);
+}
+
+.profile-dropdown .dropdown-divider {
+  margin: 0.5rem 0;
+  opacity: 0.1;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+/* Mobile Menu */
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+  position: relative;
+  z-index: 1001;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  width: 24px;
+  height: 2px;
+  background-color: var(--main-color);
+  display: block;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Mobile backdrop overlay */
+.mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  animation: fadeInBackdrop 0.3s ease-out;
+}
+
+@keyframes fadeInBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: white;
+    padding: 5rem 1.5rem 2rem;
+    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .navbar-collapse.show {
+    right: 0;
+  }
+
+  .navbar-nav {
+    gap: 0;
+    flex-direction: column;
+  }
+
+  .navbar-nav.ms-auto {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .nav-link {
+    padding: 0.875rem 1rem !important;
+    border-radius: 8px;
+    margin-bottom: 0.25rem;
+  }
+
+  .nav-link:hover,
+  .active-link {
+    background: var(--bg-light);
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  /* Profile dropdown in mobile menu */
+  .dropdown .profile-dropdown {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    margin-top: 0.5rem;
+    border: 1px solid var(--border-color);
+  }
+
+  /* Close button for mobile menu */
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    background: transparent;
+  }
+
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: var(--main-color);
+    transform: rotate(45deg);
+    top: 0;
+  }
+
+  .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: var(--main-color);
+    transform: rotate(-45deg);
+    top: 0;
+  }
+}

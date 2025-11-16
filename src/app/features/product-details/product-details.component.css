@@ -1,0 +1,70 @@
+/* Product Details Responsive Styles */
+.breadcrumb {
+  font-size: 0.875rem;
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--main-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .col-md-5,
+  .col-md-7 {
+    padding: 0 15px;
+  }
+
+  h2.fw-bold {
+    font-size: 1.5rem;
+  }
+
+  h4.fw-semibold {
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .d-flex.gap-3 {
+    gap: 0.75rem !important;
+  }
+
+  .small {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .breadcrumb {
+    font-size: 0.75rem;
+  }
+
+  h2.fw-bold {
+    font-size: 1.25rem;
+  }
+
+  h4.fw-semibold {
+    font-size: 1.125rem;
+  }
+
+  .d-flex.flex-wrap.gap-3 {
+    flex-direction: column;
+  }
+
+  .d-flex.flex-wrap.gap-3 .btn {
+    width: 100%;
+  }
+
+  .mt-4.d-flex.flex-wrap.gap-4 {
+    gap: 1rem !important;
+    font-size: 0.75rem;
+  }
+}
