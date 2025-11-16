@@ -18,13 +18,14 @@
           [(ngModel)]="searchTerm"
           (ngModelChange)="onSearchChange()"
         />
+        @if (searchTerm) {
         <button
-          *ngIf="searchTerm"
           class="clear-search-btn"
           (click)="searchTerm = ''; onSearchChange()"
         >
           <i class="bi bi-x-lg"></i>
         </button>
+        }
       </div>
     </div>
   </div>
@@ -59,10 +60,8 @@
               [(ngModel)]="brandSearchTerm"
             />
             <div class="filter-options">
-              <div
-                *ngFor="let brand of getFilteredBrands()"
-                class="form-check small mb-2"
-              >
+              @for (brand of getFilteredBrands(); track brand._id) {
+              <div class="form-check small mb-2">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -74,6 +73,7 @@
                   {{ brand.name }}
                 </label>
               </div>
+              }
             </div>
           </div>
 
@@ -86,10 +86,8 @@
               <i class="bi bi-chevron-down small text-muted"></i>
             </h6>
             <div class="filter-options">
-              <div
-                *ngFor="let category of categories"
-                class="form-check small mb-2"
-              >
+              @for (category of categories; track category._id) {
+              <div class="form-check small mb-2">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -104,6 +102,7 @@
                   {{ category.name }}
                 </label>
               </div>
+              }
             </div>
           </div>
 
@@ -166,30 +165,29 @@
         </div>
 
         <!-- Active Filters -->
-        <div
-          *ngIf="
-            selectedBrands.size > 0 || selectedCategories.size > 0 || searchTerm
-          "
-          class="active-filters mb-3"
-        >
-          <span *ngIf="searchTerm" class="filter-tag">
+        @if (selectedBrands.size > 0 || selectedCategories.size > 0 ||
+        searchTerm) {
+        <div class="active-filters mb-3">
+          @if (searchTerm) {
+          <span class="filter-tag">
             Search: "{{ searchTerm }}"
             <i class="bi bi-x" (click)="searchTerm = ''; onSearchChange()"></i>
           </span>
-          <span *ngFor="let brandId of selectedBrands" class="filter-tag">
+          } @for (brandId of selectedBrands; track brandId) {
+          <span class="filter-tag">
             {{ getBrandName(brandId) }}
             <i class="bi bi-x" (click)="toggleBrand(brandId)"></i>
           </span>
-          <span
-            *ngFor="let categoryId of selectedCategories"
-            class="filter-tag"
-          >
+          } @for (categoryId of selectedCategories; track categoryId) {
+          <span class="filter-tag">
             {{ getCategoryName(categoryId) }}
             <i class="bi bi-x" (click)="toggleCategory(categoryId)"></i>
           </span>
+          }
         </div>
+        }
 
-        <!-- Product Grid -->
+    <!-- Product Grid -->
         @if (products.length > 0) {
         <div class="row g-4">
           @for (product of products; track product.id) {

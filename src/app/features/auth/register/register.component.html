@@ -1,5 +1,6 @@
-<section>
-    <h2 class="text-main mb-5 ">Register Now :</h2>
+<section class="d-flex justify-content-center align-items-center">
+  <div class="auth-form-container">
+    <h2 class="text-main mb-5">Register Now :</h2>
     <form [formGroup]="registerForm" (ngSubmit)="register()">
   <div class="mb-3">
     <label for="name" class="form-label fw-semibold">Name</label>
@@ -117,6 +118,5 @@
 </button>
 
 </form>
-
-
+  </div>
 </section>
