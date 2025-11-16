@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1763297505373,
+  "timestamp": 1763297916649,
   "index": "/eCommerceProject/index.html",
   "assetGroups": [
     {
@@ -48,7 +48,7 @@
         "/eCommerceProject/chunk-ZPB4TSYO.js",
         "/eCommerceProject/favicon.ico",
         "/eCommerceProject/index.html",
-        "/eCommerceProject/main-MJFT6TNH.js",
+        "/eCommerceProject/main-JVPAG5QB.js",
         "/eCommerceProject/manifest.webmanifest",
         "/eCommerceProject/polyfills-FFHMD2TL.js",
         "/eCommerceProject/scripts-SQ7W6IC7.js",
@@ -220,8 +220,8 @@
     "/eCommerceProject/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/eCommerceProject/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/eCommerceProject/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/eCommerceProject/index.html": "7db79a1a39899ca61f5feb4b39aff62d96d31703",
-    "/eCommerceProject/main-MJFT6TNH.js": "af54d7cdbd46a16e2f3cccf64252928425d5af01",
+    "/eCommerceProject/index.html": "c8082d56464874969e0ca8a207d8ed8cb01054d8",
+    "/eCommerceProject/main-JVPAG5QB.js": "1d1a65897d1793afcc8513f59ebdc60ea177569d",
     "/eCommerceProject/manifest.webmanifest": "8a152867164fa7e4ed8e0790c8892aada22c6b9f",
     "/eCommerceProject/media/fa-brands-400-Q3XCMWHQ.woff2": "31c30351084e2670bbe5c47bd342e11540a68717",
     "/eCommerceProject/media/fa-brands-400-R2XQZCET.ttf": "da6f537cd597b76d264970f1c95e4beebc82fde9",
