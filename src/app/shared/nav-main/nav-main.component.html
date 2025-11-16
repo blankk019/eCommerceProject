@@ -6,18 +6,30 @@
     <button
       class="navbar-toggler"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <!-- Mobile Menu Backdrop -->
+    @if(isMobileMenuOpen) {
+    <div class="mobile-backdrop" (click)="closeMobileMenu()"></div>
+    }
+
+    <div
+      class="navbar-collapse"
+      [class.show]="isMobileMenuOpen"
+      id="navbarSupportedContent"
+    >
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="home" routerLinkActive="active-link"
+          <a
+            class="nav-link"
+            routerLink="home"
+            routerLinkActive="active-link"
+            (click)="closeMobileMenu()"
             >Home</a
           >
         </li>
@@ -26,56 +38,26 @@
             class="nav-link"
             routerLink="products"
             routerLinkActive="active-link"
+            (click)="closeMobileMenu()"
             >Products</a
           >
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <a
             class="nav-link"
-            routerLink="categories"
+            routerLink="brands"
             routerLinkActive="active-link"
-            >Categories</a
-          >
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="brands" routerLinkActive="active-link"
+            (click)="closeMobileMenu()"
             >Brands</a
           >
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <!--
-                <li class="nav-item">
-          <a class="nav-link">
-            <i class="fa-brands fa-facebook"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">
-            <i class="fa-brands fa-twitter"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">
-            <i class="fa-brands fa-linkedin"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">
-            <i class="fa-brands fa-youtube"></i>
-          </a>
-        </li>
-        -->
         @if(_PwaService.showInstallPrompt && !_PwaService.isInstalled()) {
         <li class="nav-item">
           <button
             class="btn btn-sm btn-install-pwa ms-2 me-2"
-            (click)="installPwa()"
+            (click)="installPwa(); closeMobileMenu()"
             title="Install App"
           >
             <i class="fa-solid fa-download me-1"></i> Install App
@@ -87,18 +69,71 @@
             class="nav-link"
             routerLink="wishlist"
             routerLinkActive="active-link"
+            (click)="closeMobileMenu()"
             ><i class="fa-regular fa-heart"></i
           ></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="cart" routerLinkActive="active-link"
+          <a
+            class="nav-link"
+            routerLink="cart"
+            routerLinkActive="active-link"
+            (click)="closeMobileMenu()"
             ><i class="fa-solid fa-cart-shopping"></i
           ></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link cursor-pointer" (click)="_AuthService.signOut()">
+        <li class="nav-item dropdown">
+          <a class="nav-link cursor-pointer" (click)="toggleDropdown()">
             <i class="fa-regular fa-user"></i>
           </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end profile-dropdown"
+            [class.show]="isDropdownOpen"
+            aria-labelledby="profileDropdown"
+          >
+            @if(_AuthService.userData) {
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="profile"
+                (click)="closeDropdown(); closeMobileMenu()"
+              >
+                <i class="fa-solid fa-user-gear me-2"></i>Profile Settings
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item cursor-pointer"
+                (click)="
+                  _AuthService.signOut(); closeDropdown(); closeMobileMenu()
+                "
+              >
+                <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+              </a>
+            </li>
+            } @else {
+            <li>
+              <a
+                class="dropdown-item cursor-pointer"
+                [routerLink]="['/login']"
+                (click)="closeDropdown(); closeMobileMenu()"
+              >
+                <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item cursor-pointer"
+                [routerLink]="['/register']"
+                (click)="closeDropdown(); closeMobileMenu()"
+              >
+                <i class="fa-solid fa-user-plus me-2"></i>Register
+              </a>
+            </li>
+            }
+          </ul>
         </li>
       </ul>
     </div>

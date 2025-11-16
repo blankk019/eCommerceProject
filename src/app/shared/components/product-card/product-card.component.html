@@ -1,58 +1,53 @@
-<!-- <div class="product-card">
-  <img [src]="product.imageCover" [alt]="product.title" />
-  <div class="product-card-body">
-    <h5 class="product-title">{{ product.title }}</h5>
-    <p class="product-desc">{{ product.description }}</p>
-  </div>
-  <div class="product-card-footer">
-    <button (click)="addToCart(product.id)" class="product-btn">
-      Add to Cart for ${{ product.price }}
-    </button>
-  </div>
-</div> -->
-
-<div
-  class="card border-0 shadow-sm rounded-4 text-center p-3 h-100 position-relative"
->
- <i
-    class="fa fa-heart position-absolute top-0 end-0 m-3 fs-5 cursor-pointer"
-    [ngClass]="{
-      'fa-regular text-muted': !isInWishlist,
-      'fa-solid text-black': isInWishlist
-    }"
-    style="z-index:10"
+<div class="product-card h-100 position-relative">
+  <!-- Wishlist Heart -->
+  <button
+    class="wishlist-btn"
     (click)="toggleWishList(product.id)"
-  ></i>
+    [class.active]="isInWishlist"
+    aria-label="Add to wishlist"
+  >
+    <i [class]="isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+  </button>
 
-
-
-  <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
+  <!-- Product Image -->
+  <div
+    class="product-image-wrapper"
+    [routerLink]="['/product-details', product.id]"
+  >
     <img
       [src]="product.imageCover"
       [alt]="product.title"
-      class="img-fluid rounded-3 mb-3"
-      style="max-height: 200px; object-fit: contain"
+      class="product-image"
+      loading="lazy"
     />
+    @if (product.ratingsAverage >= 4.5) {
+    <span class="badge-hot">Hot</span>
+    }
   </div>
 
-  <div class="card-body p-0">
-    <h6 class="fw-semibold mb-2">{{ product.title }}</h6>
-    <p class="text-muted small mb-1">{{ product.category.name }}</p>
+  <!-- Product Details -->
+  <div class="product-body">
+    <p class="product-category">{{ product.category.name }}</p>
+    <h6 class="product-title" [title]="product.title">
+      {{ product.title.split(" ").slice(0, 4).join(" ") }}
+    </h6>
 
-    <div class="div d-flex justify-content-between align-items-center">
-      <div class="mb-2 text-warning">
-        <span><i class="fas fa-star rating-color"></i></span>
-        <span class="text-muted small">{{ product.ratingsAverage }}</span>
+    <!-- Rating & Price -->
+    <div class="product-meta">
+      <div class="product-rating">
+        <i class="fas fa-star"></i>
+        <span>{{ product.ratingsAverage }}</span>
+        <span class="rating-count">({{ product.ratingsQuantity || 0 }})</span>
       </div>
-
-      <h5 class="fw-medium mb-3">{{ product.price }} EGP</h5>
+      <div class="product-price">
+        <span class="price-current">{{ product.price }} EGP</span>
+      </div>
     </div>
-  </div>
 
-  <button
-    class="btn btn-main rounded-3 fw-semibold py-2 w-100"
-    (click)="addToCart(product.id)"
-  >
-    Add To Cart
-  </button>
+    <!-- Add to Cart Button -->
+    <button class="btn-add-cart" (click)="addToCart(product.id)">
+      <i class="fa-solid fa-cart-plus"></i>
+      <span>Add to Cart</span>
+    </button>
+  </div>
 </div>

@@ -51,31 +51,59 @@
 
 /* Filters Sidebar */
 .filters-sidebar {
-  background: #f8f8f8;
+  background: #ffffff;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
   position: sticky;
-  top: 20px;
+  top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Scrollbar for Filters Sidebar */
+.filters-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.filters-sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb {
+  background: var(--light-color);
+  border-radius: 10px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--main-color);
 }
 
 .filter-group {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .filter-group:last-child {
   border-bottom: none;
   padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .filter-group h6 {
   font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 0.75rem;
+  color: var(--text-primary);
 }
 
 .filter-options {
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
 }

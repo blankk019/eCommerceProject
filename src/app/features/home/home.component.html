@@ -1,112 +1,191 @@
-<!-- main slider -->
-
-<section class="py-5">
-<div class="container">
-    <div class="row g-0">
-    <div class="col-md-9">
-      <div>
-
-         <owl-carousel-o [options]="customOptionsMain">
-            <ng-template carouselSlide>
-              <img src="assets/images/slider-2.jpeg" height="400px" class="w-100" alt="">
-            </ng-template>  
-              <ng-template carouselSlide>
-              <img src="assets/images/slider-image-2.jpeg" height="400px" class="w-100" alt="">
-            </ng-template>  
-              <ng-template carouselSlide>
-              <img src="assets/images/slider-image-3.jpeg" height="400px" class="w-100" alt="">
-            </ng-template>  
-             
-   
-          </owl-carousel-o>
-
-
+<!-- iPhone 14 Pro Hero Section -->
+<section class="iphone-hero-section">
+  <div class="container-fluid px-0">
+    <div class="iphone-hero-wrapper">
+      <div class="iphone-hero-content">
+        <div class="iphone-content-inner">
+          <span class="iphone-subtitle">Pro.Beyond.</span>
+          <h1 class="iphone-title">
+            IPhone 14 <span class="iphone-title-bold">Pro</span>
+          </h1>
+          <p class="iphone-desc">
+            Created to change everything for the better. For everyone
+          </p>
+          <a routerLink="/products" class="btn btn-iphone">Shop Now</a>
+        </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div>
-        <img src="assets/images/grocery-banner.png" height="200px" class="w-100" alt="">
-        <img src="assets/images/grocery-banner-2.jpeg" height="200px" class="w-100" alt="">
+      <div class="iphone-hero-image">
+        <img src="assets/images/IphoneImage.png" alt="iPhone 14 Pro" />
       </div>
     </div>
   </div>
-</div>
 </section>
 
-
-<!-- categories -->
- <section class="my-2">
-<div class="container">
-    <h2 class="section-title position-relative d-inline-block pb-1">
-  Popular Categories
-</h2>
-   <owl-carousel-o [options]="customOptionsCat">
-
-    @for (cat of categoriesList; track cat._id) {
-      <ng-template carouselSlide>
-        <div>
-          <img [src]="cat.image" class="w-100" height="250px" [alt]="cat.name">
-          <h3 class="text-main h6">{{cat.name}}</h3>
+<!-- Hero Slider Section -->
+<section class="hero-section py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Main Slider -->
+      <div class="col-lg-9 col-md-8">
+        <div class="main-slider-wrapper">
+          <owl-carousel-o [options]="customOptionsMain">
+            <ng-template carouselSlide>
+              <div class="slider-item">
+                <img
+                  src="assets/images/friday.jpg"
+                  alt="Featured Collection"
+                  class="slider-image"
+                />
+                <!-- <div class="slider-overlay">
+                  <div class="slider-content">
+                    <span class="slider-badge">New Collection</span>
+                    <h2 class="slider-title">Discover Amazing Products</h2>
+                    <p class="slider-desc">
+                      Shop the latest trends with exclusive discounts
+                    </p>
+                    <a routerLink="/products" class="btn btn-accent btn-lg"
+                      >Shop Now</a
+                    >
+                  </div>
+                </div> -->
+              </div>
+            </ng-template>
+            <ng-template carouselSlide>
+              <div class="slider-item">
+                <img
+                  src="assets/images/elec.jpg"
+                  alt="Summer Sale"
+                  class="slider-image"
+                />
+                <div class="slider-overlay">
+                  <div class="slider-content">
+                    <span class="slider-badge">Limited Offer</span>
+                    <h2 class="slider-title">Summer Sale Up to 50%</h2>
+                    <p class="slider-desc">Don't miss out on exclusive deals</p>
+                    <a routerLink="/products" class="btn btn-accent btn-lg"
+                      >Explore Deals</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template carouselSlide>
+              <div class="slider-item">
+                <img
+                  src="assets/images/black.jpg"
+                  alt="Premium Quality"
+                  class="slider-image"
+                />
+                <div class="slider-overlay">
+                  <div class="slider-content">
+                    <span class="slider-badge">Premium Quality</span>
+                    <h2 class="slider-title">Quality You Can Trust</h2>
+                    <p class="slider-desc">
+                      Experience excellence in every product
+                    </p>
+                    <a routerLink="/products" class="btn btn-accent btn-lg"
+                      >View Collection</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </owl-carousel-o>
         </div>
-      </ng-template>
-    }
-
-  </owl-carousel-o>
-</div>
- </section>
-
-<!-- products -->
-<section class="py-5">
- <div class="container">
-       <h2 class="section-title position-relative d-inline-block pb-1">
-  Featured Products
-</h2>
-
-<div class="row g-4">
-  @for (product of productsList.slice(0, 18); track product.id) {
-    <div class="col-md-4 col-sm-6 col-12 col-lg-3 mb-4 ">
-     <app-product-card [product]="product"></app-product-card>
-    </div>
-  }
-</div>
- </div>
-
-    <!-- <div class="row g-3">
-
-        @for (product of productsList.slice(0,18); track product.id)
-        {
-            <div class="col-md-2">
-  <div class="product card border-0 shadow-sm h-100 text-center p-2">
-   <div [routerLink]="['/product-details', product.id]" class="cursor-pointer">
-     <img [src]="product.imageCover" class="w-100" [alt]="product.title">
-
-    <div class="product-card-body">
-      <p class="mb-1 small">{{product.category.name}}</p>
-
-      <h6 class="product-title ">
-        {{product.title.split(" ", 2).join(" ")}}
-      </h6>
-
-     <div class="div d-flex justify-content-between align-items-center">
-         <div class="mb-2 text-warning">
-            <span><i class="fas fa-star rating-color"></i></span>
-        <span class="text-muted small">{{product.ratingsAverage}}</span>
       </div>
 
-      <h5 class="fw-medium mb-3">{{product.price}} EGP</h5>
-     </div>
-
-      
+      <!-- Side Banners -->
+      <div class="col-lg-3 col-md-4">
+        <div class="side-banners">
+          <div class="side-banner-item mb-3">
+            <img
+              src="assets/images/PlayStation.png"
+              alt="Grocery"
+              class="side-banner-image"
+            />
+            <div class="side-banner-overlay">
+              <h5>PlayStation 5</h5>
+            </div>
+          </div>
+          <div class="side-banner-item macbook-banner">
+            <img
+              src="assets/images/MacBook.png"
+              alt="Special Offers"
+              class="side-banner-image"
+            />
+            <div class="side-banner-overlay">
+              <h5>MacBook Air</h5>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-   </div>
-
-    <button class="btn btn-main w-100">
-        Add to Cart
-      </button>
   </div>
-</div>
+</section>
 
-        }
+<!-- Categories Section -->
+<section class="categories-section py-5 bg-white">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Popular Categories</h2>
+      <p class="section-subtitle">
+        Explore our wide range of product categories
+      </p>
+    </div>
 
-    </div> -->
+    <owl-carousel-o [options]="customOptionsCat">
+      @for (cat of categoriesList; track cat._id) {
+      <ng-template carouselSlide>
+        <div class="category-card">
+          <div class="category-image-wrapper">
+            <img [src]="cat.image" [alt]="cat.name" class="category-image" />
+          </div>
+          <h6 class="category-name">{{ cat.name }}</h6>
+        </div>
+      </ng-template>
+      }
+    </owl-carousel-o>
+  </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="products-section py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Featured Products</h2>
+      <p class="section-subtitle">Handpicked items just for you</p>
+    </div>
+
+    <div class="row g-3">
+      @for (product of productsList.slice(0, 8); track product.id) {
+      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Big Summer Sale Banner Section -->
+<section class="sale-banner-section py-5">
+  <div class="container">
+    <div class="sale-banner-wrapper">
+      <img
+        src="assets/images/Banner.png"
+        alt="Big Summer Sale"
+        class="sale-banner-image"
+      />
+      <div class="sale-banner-overlay">
+        <div class="sale-banner-content">
+          <h2 class="sale-banner-title">
+            Big Summer <span class="highlight">Sale</span>
+          </h2>
+          <p class="sale-banner-desc">
+            Commodo fames vitae vitae leo mauris in. Eu consequat.
+          </p>
+          <a routerLink="/products" class="btn btn-banner">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

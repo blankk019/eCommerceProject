@@ -1,56 +1,86 @@
 <nav class="navbar navbar-expand-lg nav-back fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="login">
-        <img src="./assets/images/Logo.png" alt="">
+      <img src="./assets/images/Logo.png" alt="" />
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
- 
 
-        <ul class="navbar-nav ms-auto">
-      
+    <!-- Mobile Menu Backdrop -->
+    @if(isMobileMenuOpen) {
+    <div class="mobile-backdrop" (click)="closeMobileMenu()"></div>
+    }
+
+    <div
+      class="navbar-collapse"
+      [class.show]="isMobileMenuOpen"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link">
             <i class="fa-brands fa-facebook"></i>
           </a>
         </li>
-       <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link">
             <i class="fa-brands fa-twitter"></i>
           </a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link">
             <i class="fa-brands fa-instagram"></i>
           </a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link">
             <i class="fa-brands fa-linkedin"></i>
           </a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link">
             <i class="fa-brands fa-youtube"></i>
           </a>
         </li>
 
-         <li class="nav-item" >
-          <a class="nav-link cursor-pointer" routerLink="login" routerLinkActive="active-link">
-            Login
+        <li class="nav-item dropdown">
+          <a class="nav-link cursor-pointer" (click)="toggleDropdown()">
+            <i class="fa-regular fa-user"></i>
           </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end profile-dropdown"
+            [class.show]="isDropdownOpen"
+            aria-labelledby="profileDropdown"
+          >
+            <li>
+              <a
+                class="dropdown-item cursor-pointer"
+                routerLink="login"
+                (click)="closeDropdown(); closeMobileMenu()"
+              >
+                <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item cursor-pointer"
+                routerLink="register"
+                (click)="closeDropdown(); closeMobileMenu()"
+              >
+                <i class="fa-solid fa-user-plus me-2"></i>Register
+              </a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item" >
-          <a class="nav-link cursor-pointer" routerLink="register" routerLinkActive="active-link">
-            Register
-          </a>
-        </li>
-       
-      
       </ul>
-    
     </div>
   </div>
 </nav>
